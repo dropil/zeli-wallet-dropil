@@ -97,7 +97,7 @@ export default {
 
       store.dispatch(SET_META, networks[environment][chainId])      
       tools.toastrSuccess('You have switched to the ' + chainId + ' network')
-      this.$root.$emit('disconnect')
+      this.$router.push('/')
     }
   }
 }

@@ -50,6 +50,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: "Home",
+  title: "Home",
   pageClass: "home",
   computed: {
     ...mapGetters(['meta'])    
