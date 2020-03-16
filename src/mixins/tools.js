@@ -134,6 +134,8 @@ export const tools = {
     }
   },
   async signTransaction(type) {      
+    let meta = store.state.general.meta
+
     let params = {
       mnemonic: store.state.wallet.mnemonic,
       memo: store.state.wallet[type].memo,
@@ -144,14 +146,14 @@ export const tools = {
 
     switch (type) {
       case 'send':
-        if (!store.state.wallet[type].destination.toString().startsWith('drop'))          
+        if (!store.state.wallet[type].destination.toString().startsWith(meta.bech32Prefix))          
           return tools.toastrError("Entered destination address is not in proper format")
 
         params.destination = store.state.wallet[type].destination
 
         break
       case 'modifyWithdrawAddress':
-        if (!store.state.wallet[type].withdrawAddress.toString().startsWith('drop'))          
+        if (!store.state.wallet[type].withdrawAddress.toString().startsWith(meta.bech32Prefix))          
           return tools.toastrError("Entered withdraw address is not in proper format")
 
         params.withdrawAddress = store.state.wallet[type].withdrawAddress
@@ -159,20 +161,22 @@ export const tools = {
         break
       case 'delegate':
       case 'undelegate':
-        if (!store.state.wallet[type].destination.toString().startsWith('dropvaloper'))          
+        if (!store.state.wallet[type].destination.toString().startsWith(meta.bech32Prefix + 'valoper'))          
           return tools.toastrError("Entered validator address is not in proper format")
 
         params.validatorAddress = store.state.wallet[type].destination
 
         break
       case 'redelegate':
-        if (!store.state.wallet.redelegate.validatorSourceAddress.toString().startsWith("dropvaloper"))
+        if (!store.state.wallet.redelegate.validatorSourceAddress.toString().startsWith(meta.bech32Prefix + "valoper"))
           return tools.toastrError("Entered old validator address is not in proper format")
-        else if (!store.state.wallet.redelegate.validatorDestAddress.toString().startsWith("dropvaloper"))
+        else if (!store.state.wallet.redelegate.validatorDestAddress.toString().startsWith(meta.bech32Prefix + "valoper"))
           return tools.toastrError("Entered new validator address is not in proper format")
 
         params.validatorSourceAddress = store.state.wallet.redelegate.validatorSourceAddress
         params.validatorDestAddress = store.state.wallet.redelegate.validatorDestAddress
+        params.fee = meta.baseFee * 2
+        params.gas = meta.baseGas * 1.5
 
         break
     }
