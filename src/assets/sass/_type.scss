@@ -1,0 +1,427 @@
+/// <reference path="main" />
+
+html,
+body {
+  background-color: $c-bg;
+  font-family: $font-family-base;
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $c-grey-font;
+  font-size: $font-size-small;
+  text-rendering: optimizeLegibility;
+
+  @media #{$bp-tall} {
+    font-size: $font-size-base;
+  }
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+// Copy & Lists
+p {
+  line-height: 1.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0;
+}
+
+ul,
+ol {
+  padding: 1.5rem 0;
+  list-style-type: none;
+}
+
+ul li,
+ol li {
+  line-height: 1.5rem;
+}
+
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+blockquote {
+  line-height: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+a {
+  color: $c-brand;
+  transition: 0.3s ease all;
+  cursor: pointer;
+
+  &,
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:hover {
+    color: $c-brand;
+  }
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-alt;
+  padding: 0;
+  line-height: 1.5rem;
+  color: #203d8c;
+}
+
+h1 {
+  font-size: 1.75rem;
+
+  @media #{$bp-tall} {
+    font-size: 2rem;
+  }
+
+  @media #{$bp-grande} {
+    font-size: 2.25rem;
+  }
+
+  line-height: 2.75rem;
+  font-weight: 100;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 3rem;
+  font-weight: 100;
+}
+
+h3 {
+  font-family: $font-family-base;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-family: $font-family-base;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: $c-grey-font;
+}
+
+h5 {
+  font-size: 0.4713333333333333rem;
+}
+
+h6 {
+  font-size: 0.3535rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $c-bg;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #eef1f4;
+}
+
+// Tables
+table {
+  padding-top: 1.5rem;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+// Code Blocks
+code {
+  vertical-align: bottom;
+}
+
+$c-placeholder: $c-grey-font;
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  font-weight: 600;
+  color: $c-placeholder;
+  opacity: 0.7;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: $c-placeholder;
+  opacity: 0.7;
+}
+
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: $c-placeholder;
+  opacity: 0.7;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: $c-placeholder;
+  opacity: 0.7;
+}
+
+input {
+  border-radius: 6px;
+  transition: 0.3s ease all;
+  color: $c-grey-font;
+
+  &.has-label {
+    transition: none;
+  }
+
+  &[type="text"],
+  &[type="number"],
+  &[type="password"] {
+    background-color: transparent;
+    border: 0 none;
+    border-radius: 0;
+    border-bottom: 1px solid $c-border;
+    width: 100%;
+    padding: 0.5em 0;
+  }
+
+  &[type="radio"] {
+    position: relative;
+    padding: 1px;
+    background-color: $c-white;
+    border: 1px solid #afbdce;
+    border-radius: 50%;
+    padding: 0;
+    float: left;
+    margin-right: 1em;
+
+    &:before {
+      content: "";
+      margin: auto;
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid $c-white;
+    }
+
+    &:checked {
+      &:before {
+        background-color: $c-green;
+      }
+    }
+  }
+
+  &[type="checkbox"] {
+    position: relative;
+    border: 0 none;
+    background-color: $c-light-grey-font;
+    width: 20px;
+    height: 20px;
+    transition: 0.3s ease all;
+    vertical-align: middle;
+    border-radius: 4px;
+
+    + label {
+      margin-left: 0.5em;
+      vertical-align: middle !important;
+    }
+
+    &:before {
+      @include fa-icon;
+      @extend .fas;
+      content: "";
+      display: block;
+      position: absolute;
+      color: $c-bg;
+      width: 15px;
+      height: 15px;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      transition: 0.3s ease all;
+      font-size: 13px;
+      text-align: center;
+      padding-top: 2px;
+      border-radius: 4px;
+    }
+
+    &:checked {
+      background-color: $c-green;
+
+      &:before {
+        content: fa-content($fa-var-check);
+      }
+    }
+
+    &.toggle {
+      width: 50px;
+      height: 27px;
+      background-color: $c-bg;
+      border: 1px solid $c-border;
+      border-radius: 13.5px;
+
+      &:before {
+        content: "";
+        display: block;
+        width: 23px;
+        height: 21px;
+        background-color: #748fb7;
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        bottom: 1px;
+        right: unset;
+        border-radius: 50%;
+      }
+
+      &:checked {
+        &:before {
+          background-color: $c-green;
+          left: 50%;
+        }
+      }
+    }
+  }
+
+  &[type="checkbox"],
+  &[type="radio"],
+  &[type="submit"],
+  &[type="button"] {
+    cursor: pointer;
+  }
+}
+
+input,
+textarea {
+  color: #222b3d;
+  font-family: $font-family-base;
+}
+
+textarea {
+  background-color: transparent;
+  border: 0 none;
+  border-radius: 0;
+  border-bottom: 1px solid $c-border;
+  width: 100%;
+  padding: 0.5em 0;
+}
+
+input,
+select,
+textarea {
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.select-wrap {
+  position: relative;
+  display: inline-block;
+  background-color: $c-medium-grey;
+  width: 270px;
+  height: 40px;
+  max-width: 100%;
+  transition: 0.3s ease all;
+
+  &:after {
+    @include fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-chevron-down);
+    color: $c-grey-font;
+    height: 16px;
+    position: absolute;
+    right: 1em;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    pointer-events: none;
+  }
+
+  select {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0 2em;
+    background-color: transparent;
+    border: 0 none;
+    color: $c-grey-font;
+    line-height: 1.5em;
+    border: 1px solid #405167;
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:focus {
+      border-color: rgba($c-jade, 0.5);
+    }
+  }
+}
+
+label {
+  cursor: pointer;
+}
+
+.pending {
+  color: $c-orange !important;
+}
+
+.complete,
+.success {
+  color: $c-green !important;
+}
+
+.failed,
+.error,
+.cancelled,
+.danger {
+  color: $c-red !important;
+}
+
+.blue-font {
+  color: $c-blue !important;
+}
+
+.dark-blue-font {
+  color: $c-dark-blue !important;
+}
+
+.grey-font {
+  color: $c-grey-font !important;
+}
+
+.light.g,
+.light-green-font {
+  color: $c-light-green !important;
+}
+
+.light.p,
+.light-purple-font {
+  color: $c-light-purple !important;
+}
+
+.text-center,
+.center {
+  text-align: center !important;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.bold {
+  font-weight: 600;
+}

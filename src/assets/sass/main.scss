@@ -1,0 +1,38 @@
+// Libraries
+// =======================
+
+$fa-font-path: "../fonts/fa";
+@import "../../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss";
+@import "../../../node_modules/@fortawesome/fontawesome-pro/scss/regular";
+@import "../../../node_modules/@fortawesome/fontawesome-pro/scss/solid";
+@import "../../../node_modules/@fortawesome/fontawesome-pro/scss/light";
+@import "../../../node_modules/@fortawesome/fontawesome-pro/scss/brands";
+@import "../../../node_modules/@fortawesome/fontawesome-pro/scss/duotone";
+
+// Fonts
+// =======================
+
+@import "fonts";
+
+// Theme Configuration
+// =======================
+
+@import "svg-datauris";
+@import "variables";
+@import "type";
+@import "mixins";
+
+
+// Partials
+// =======================
+
+@import "partials/components";
+@import "partials/header";
+@import "partials/footer";
+
+
+// Pages
+// =======================
+
+@import "pages/dash";
+@import "pages/layout";

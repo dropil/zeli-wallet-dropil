@@ -1,0 +1,585 @@
+/// <reference path="../main" />
+
+@media only screen and (max-width: 479px) {
+  header.navigation {
+    .container {      
+      .type-logo {
+        a.title {
+          padding-right: 25px;
+        }
+      }
+
+      .submenu {
+        right: unset;
+        bottom: unset;
+        padding-bottom: 0;
+        padding-right: 0;
+        height: 36px;
+        width: 13px;
+        float: right;
+        position: relative;
+        margin-left: 15px;
+
+        &:before {
+          color: $c-grey-font;
+          width: 13px;
+          bottom: 0;
+        }
+
+        .extra {
+          left: unset;
+          right: 0;
+          top: 2.25em;
+        }
+      }
+    }
+  }
+}
+
+header {
+  @extend .clearfix;
+  background-color: $c-header;
+  position: relative;    
+  padding: 1em;
+
+  @media #{$bp-grande} {
+    padding: 1em 0;
+  }
+
+  .type-logo {
+    @include img($svg-dropil-chain-logo-white, 105px, left);
+    float: left;
+    position: relative;  
+    margin-top: -3px;
+    width: 105px;
+    margin-right: 1.5em;
+  
+    a.title {
+      display: block;
+      color: $c-brand;
+      height: 40px;
+      padding-right: 30px;
+      line-height: 38px;
+    }
+  
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .networks {
+    float: left;
+    position: relative;
+    
+    > p {
+      position: absolute;
+      top: -8px;
+      left: 8px;
+      font-size: 11px;
+      line-height: 11px;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.2px;  
+    }
+  
+    .current {
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 5px 33px 5px 15px;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      margin-top: 9px;
+      cursor: pointer;
+      position: relative;
+  
+      &:after {
+        @include fa-icon;
+        @extend .far;
+        content: fa-content($fa-var-chevron-down);
+        font-size: 12px;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  
+    .dropdown {
+      position: absolute;
+      z-index: 3;
+      top: calc(100% + 5px);
+      right: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: .3s ease all;
+      background-color: $c-white; 
+      white-space: nowrap;   
+      text-align: left;
+      box-shadow: $shadow-light;
+  
+      &.active {      
+        max-height: 400px;      
+      }
+  
+      .wrapper {
+        border: 1px solid $c-border;
+  
+        .environment {
+          border-bottom: 1px solid $c-border;
+          padding: .5em 1em 1em;
+    
+          &:last-child {        
+            border-bottom: 0;
+          }
+    
+          p {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 0;
+          }
+    
+          .network {
+            cursor: pointer;
+            padding-right: 2em;
+    
+            &:not(.first) {
+              margin-top: .75em;
+            }
+    
+            &:hover {
+              color: $c-brand;
+            }
+    
+            .img {          
+              width: 25px;
+              height: 25px;
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 8px;
+    
+              &.drop {
+                @include img($svg-dropil-avatar-color, 25px);
+              }
+    
+              &.atom {
+                @include img($svg-cosmos-logo, 25px);
+              }
+            }
+    
+            .text {
+              display: inline-block;
+              vertical-align: middle;
+    
+              .name {
+                font-weight: 600;
+                color: $c-brand;
+              }
+    
+              .chain-id {
+                font-size: 12px;
+                line-height: 12px;
+              }
+            }
+          }
+        }  
+      }        
+    }
+  }
+  
+  ul.mininav {
+    display: none;
+  
+    @media #{$bp-venti} {
+      display: block;
+    }
+  
+    float: right;
+    padding: 5px 0;
+  
+    li {
+      display: inline-block;
+      margin-left: 1.5em;
+  
+      &:first-child {
+        margin-left: 0;
+      }
+  
+      a {
+        color: $c-white;
+        font-size: 12px;
+        letter-spacing: 0.7px;
+        margin-right: 1.5em;
+  
+        &:hover,
+        &.active {
+          color: $c-white;
+        }
+      }
+    }
+  }
+
+  .submenu {
+    cursor: pointer;
+    float: right;
+    width: 40px;
+    height: 37px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 37px;
+    position: relative;
+
+    @media #{$bp-venti} {
+      display: none;
+    }
+
+    &:before {
+      @include fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-bars);
+      width: 16px;
+      height: 16px;
+      margin: auto;
+      color: $c-white;
+    }
+
+    &:hover {
+      .extra {
+        max-height: unset;
+        opacity: 1;
+        border: 1px solid $c-border;
+      }
+    }
+
+    .extra {
+      position: absolute;
+      top: 100%;
+      right: 12px;
+      z-index: 99;
+      box-shadow: $shadow-dark;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: 0.3s ease all;
+
+      a {
+        display: block;
+        background-color: $c-bg;
+        padding: 0.25em 1.5em;
+        text-align: left;
+        color: $c-black;
+        border-bottom: 1px solid $c-border;
+        position: relative;
+        white-space: nowrap;
+        font-weight: 600;
+
+        &:last-child {
+          border-bottom: 0 none;
+        }
+
+        &:hover {
+          background-color: $c-white;
+        }
+      }
+    }
+  }
+}
+
+.main-menu {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  right: 1em;
+  max-height: 95%;
+  overflow: auto;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #323e50;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $c-dark-grey;
+  }
+
+  @media #{$bp-grande} {
+    position: absolute;
+    top: 3.5em;
+    left: 2em;
+    right: unset;
+    max-height: unset;
+    overflow: hidden;
+  }
+
+  @media only screen and (min-width: 1350px) {
+    left: calc(95% / 2 - 600px);
+  }
+
+  font-size: 16px;
+  width: auto;
+  height: auto;
+  z-index: 401;
+  transition: 0.3s ease max-height, 0.3s ease opacity;
+  box-shadow: 0 0 10px 0 rgba(154, 166, 188, 0.95);
+  border: 1px solid $c-bg;
+  display: none;
+
+  div.close {
+    position: fixed;
+    top: 2em;
+    right: 2.5em;
+    width: 20px;
+    height: 20px;
+    z-index: 402;
+
+    @media #{$bp-grande} {
+      display: none;
+    }
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      background-color: $c-red;
+      height: 1px;
+      width: 100%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  a {
+    position: relative;
+    display: block;
+    color: $c-grey-font;
+    font-weight: 600;
+    padding: 0.75em 1.25em 0.75em 1.5em;
+    text-transform: none;
+
+    span {
+      font-weight: 400;
+      color: $c-grey-font;
+      margin-left: 0.5em;
+    }
+
+    &:hover {
+      background-color: $c-bg;
+    }
+  }
+
+  .bots,
+  .apps,
+  .other {
+    padding-bottom: 1em;
+
+    @media #{$bp-venti} {
+      float: left;
+      min-height: 315px;
+      min-width: 280px;
+    }
+
+    .title {
+      font-size: 0.8em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 2em 2em 1em;
+      color: #405167;
+      font-family: Lato;
+    }
+  }
+
+  .bots,
+  .apps {
+    background-color: $c-white;
+
+    a {
+      padding-left: 3.75em;
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 36px;
+        height: 26px;
+        top: 0;
+        left: 1.5em;
+        bottom: 0;
+        margin: auto;
+      }
+    }
+  }
+
+  .bots {
+    background-color: $c-dark-grey;
+
+    @media #{$bp-venti} {
+      border-right: 1px solid $c-bg;
+    }
+
+    a {
+      font-size: 1.1em;
+
+      span {
+        font-weight: 600;
+        font-size: 0.85em;
+      }
+
+      &.dex {
+        color: $c-dex;
+
+        &:before {
+          @include img($svg-menu-dex, contain, left center);
+        }
+      }
+
+      &.arthur {
+        color: $c-arthur;
+
+        &:before {
+          @include img($svg-menu-arthur, contain, left center);
+        }
+      }
+
+      &.max {
+        color: $c-max;
+
+        &:before {
+          @include img($svg-menu-max, contain, left center);
+        }
+      }
+
+      &.jade {
+        color: $c-jade;
+
+        &:before {
+          @include img($svg-menu-jade, contain, left center);
+        }
+      }
+
+      &.seer {
+        color: $c-seer;
+
+        &:before {
+          @include img($svg-menu-seer, contain, left center);
+          left: 1.65em;
+        }
+      }
+    }
+  }
+
+  .apps {
+    background-color: $c-dark-grey;
+
+    a {
+      font-size: 0.95em;
+      padding: 1em 1.25em 1em 4.5em;
+
+      span {
+        font-size: 0.9em;
+        margin-left: 0;
+      }
+
+      &:before {
+        width: 34px;
+        height: 34px;
+        left: 1.5em;
+      }
+
+      &.direct {
+        &:before {
+          @include img($svg-dropil-direct, contain, left center);
+        }
+      }
+
+      &.earn {
+        &:before {
+          @include img($svg-earn-dropil, contain, left center);
+        }
+      }
+
+      &.games {
+        &:before {
+          @include img($svg-games-icon, contain, left center);
+        }
+      }
+
+      &.paper {
+        &:before {
+          @include img($svg-paper-icon, contain, left center);
+        }
+      }
+    }
+  }
+
+  .other {
+    background-color: $c-bg;
+    min-width: 200px;
+    padding-bottom: 0;
+    position: relative;
+    min-height: 290px;
+
+    @media #{$bp-grande} {
+      min-height: 315px;
+    }
+
+    a {
+      font-weight: 400;
+    }
+
+    .social {
+      padding: 0;
+      padding-left: 1em;
+      position: absolute;
+      bottom: 1em;
+      width: 100%;
+
+      li {
+        display: inline-block;
+        margin: 0 0.5em;
+
+        a {
+          font-size: 0.9em;
+          padding: 0;
+          opacity: 0.4;
+
+          @include fa-icon;
+          @extend .fab;
+
+          &:hover {
+            background-color: transparent;
+
+            &:before {
+              color: $c-white;
+            }
+          }
+
+          &.fb:before {
+            content: fa-content($fa-var-facebook);
+          }
+
+          &.tw:before {
+            content: fa-content($fa-var-twitter);
+          }
+
+          &.yt:before {
+            content: fa-content($fa-var-youtube);
+          }
+
+          &.tg:before {
+            content: fa-content($fa-var-telegram-plane);
+          }
+        }
+      }
+    }
+  }
+}

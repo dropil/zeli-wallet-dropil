@@ -1,0 +1,33 @@
+
+@mixin img($img, $size: contain, $position: center, $repeat: no-repeat) {
+  background: {
+    image: url("#{$img}");
+    size: $size;
+    position: $position;
+    repeat: $repeat;
+  }
+}
+
+@mixin blur($size: 17px) {
+
+  -webkit-filter: blur($size);
+  -moz-filter: blur($size);
+  -o-filter: blur($size);
+  -ms-filter: blur($size);
+  filter: blur($size);
+}
+
+@mixin centerer($horizontal: true, $vertical: true) {
+  position: absolute;
+  @if ($horizontal and $vertical) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if ($horizontal) {
+    left: 50%;
+    transform: translate(-50%, 0);
+  } @else if ($vertical) {
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}

@@ -1,0 +1,98 @@
+/// <reference path="main" />
+
+// Colors
+// =======================
+
+$c-white: #fff;
+$c-off-white: #B7C2D6;
+$c-black: #1C2431;
+$c-blue: #21B0EA;
+$c-red: #ED5450;
+$c-orange: #DB651D;
+$c-yellow: #FBDB0B;
+$c-purple: #5B21EA;
+$c-light-purple: #8C5DFF;
+$c-green: #17C573;
+$c-light-green: #50E3C2;
+$c-dark-green: #09844A;
+$c-vomit-green: #7ED321;
+$c-dark-red: #E7001C;
+$c-dark-blue: #4173FF;
+$c-light-grey: #808EA1; //#9AA6BC;
+$c-medium-grey: #57699D;
+$c-dark-grey: #151B25;
+
+$c-grey-font: #6B7C93;
+$c-light-grey-font: #AFBDCE;
+
+$c-border: #C9D5E7;
+$c-header: #222b3d;
+$c-subhead-bg: $c-white;
+$c-bg: #EEF1F4;
+$c-well-bg: #DFE6ED;
+$c-dark-well-bg: #405167;
+
+$shadow-dark: 0 0 32px 0 rgba($c-black, .95);
+$shadow-light: 0 0 32px 0 rgba($c-light-grey, .35);
+
+// Dropil App Colors
+// =======================
+
+$c-home: #fff;
+$c-support: #fff;
+$c-dex: #21B0EA;
+$c-arthur: #f2a524;
+$c-max: #ED5450;
+$c-jade: #50E3C2;
+$c-seer: #FF34AF;
+$c-paper: #F2D492;
+$c-insights: #6B7C93;
+$c-rooty: #e61d5e;
+$c-earn: #FFB134;
+$c-games: #87eeff;
+$c-brand: #203d8c;
+
+$dropil-apps: (
+    ('home', $c-home, $svg-drops),
+    ('support', $c-support, $svg-drops),
+    ('dex', $c-dex, $svg-menu-dex),
+    ('arthur', $c-arthur, $svg-menu-arthur),
+    ('max', $c-max, $svg-menu-max),
+    ('jade', $c-jade, $svg-menu-jade),
+    ('paper', $c-paper, $svg-paper-yellow),
+    ('insights', $c-insights, $svg-insights),
+    ('rooty', $c-rooty, $svg-insights),
+    ('seer', $c-seer, $svg-menu-seer),
+    ('earn', $c-earn, $svg-earn-dropil),
+    ('games', $c-games, $svg-games-icon)
+);
+
+// Typography
+// =======================
+
+$font-family-base: "Source Sans Pro";
+$font-family-alt: "TiemposHeadline";
+
+$font-size-small  : 15px;
+$font-size-base   : 16px;
+
+// Media Queries
+// =======================
+
+$bp-tall:	"only screen and (min-width: 480px)";
+$bp-grande:	"only screen and (min-width: 768px)";
+$bp-venti:	"only screen and (min-width: 992px)";
+$bp-trenta: "only screen and (min-width: 1200px)";
+$bp-supersize: "only screen and (min-width: 1600px)";
+
+// Susy Settings (add as needed in base)
+// =======================
+
+$gutter-position: after;
+$container: 1250px;
+$columns: 12;
+$gutters: .25;
+$box-sizing: content-box;
+$sm-footer-height: 157px;
+$md-footer-height: 113px;
+$footer-height: 61px; // sticky footer in _layout.scss

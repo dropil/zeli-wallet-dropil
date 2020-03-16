@@ -1,0 +1,100 @@
+/// <reference path="../main" />
+
+footer.footer {
+  border-top: 1px solid transparent;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  font-weight: 600;
+  line-height: 30px;
+  background-color: #e5f0fe;
+
+  @media #{$bp-venti} {
+    .container {
+      display: grid;
+      grid-template-columns: 25% 75%;
+    }
+  }
+
+  .container {
+    .left {
+      .logo-copy {
+        @include img($svg-symbol-black, contain, 8px center);
+        padding: 1.25em 0 1.25em 45px;
+        background-size: 28px;
+        width: 175px;
+        margin: 0 auto;
+        text-align: center;
+
+        @media #{$bp-venti} {
+          margin: 0;
+          text-align: left;
+        }
+      }
+    }
+
+    .right {
+      text-align: center;
+      width: 100%;
+
+      @media #{$bp-venti} {
+        text-align: right;
+      }
+
+      ul {
+        display: block;
+        padding: 0.5em 0;
+
+        @media #{$bp-venti} {
+          display: inline-block;
+          padding: 1em 0;
+        }
+
+        li {
+          display: inline-block;
+          margin-left: 1em;
+          line-height: 3em;
+
+          a {
+            color: $c-grey-font;
+
+            &:hover {
+              color: $c-jade;
+            }
+          }
+        }
+      }
+
+      .social {
+        margin-left: 0.5em;
+
+        li {
+          margin-left: 0.5em;
+
+          a {
+            font-size: 1.5em;
+
+            @include fa-icon;
+            @extend .fab;
+
+            &.fb:before {
+              content: fa-content($fa-var-facebook);
+            }
+
+            &.tw:before {
+              content: fa-content($fa-var-twitter);
+            }
+
+            &.yt:before {
+              content: fa-content($fa-var-youtube);
+            }
+
+            &.tg:before {
+              content: fa-content($fa-var-telegram-plane);
+            }
+          }
+        }
+      }
+    }
+  }
+}
