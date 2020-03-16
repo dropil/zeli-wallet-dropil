@@ -103,6 +103,18 @@ header {
         top: 50%;
         transform: translateY(-50%);
       }
+
+      .img {
+        @include inline-img;
+
+        &.drop {
+          @include drop-logo(15px);
+        }
+
+        &.atom {
+          @include atom-logo(15px);
+        }
+      }
     }
   
     .dropdown {

@@ -1,7 +1,7 @@
 <template>
   <div class="networks" @click="toggle" :id="uniqueId">
     <p>network</p>
-    <div class="current">{{meta.chainId}}</div>
+    <div class="current"><div class="img" :class="meta.ticker.toLowerCase()"></div> {{meta.chainId}}</div>
     
     <div class="dropdown" :class="{active:open}" :id="uniqueId+'-child'">
       <div class="wrapper">

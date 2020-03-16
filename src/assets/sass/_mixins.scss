@@ -31,3 +31,21 @@
     transform: translate(0, -50%);
   }
 }
+
+@mixin inline-img() {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+@mixin drop-logo($size) {
+  @include img($svg-dropil-avatar-color, $size);
+  width: $size;
+  height: $size;  
+}
+
+@mixin atom-logo($size) {
+  @include img($svg-cosmos-logo, $size);
+  width: $size;
+  height: $size;  
+}
