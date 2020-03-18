@@ -235,27 +235,29 @@ export default {
     if (firstLoad) this.load(true)
     else this.startBalancesUpdatedInterval()
       
-    this.$root.$on('loadBalances', this.loadBalances)
+    this.$root.$on('loadBalances', () => this.load())
   },
   destroyed() {
     this.$root.$off('loadBalances')
     if (this.balancesIntervalId) clearInterval(this.balancesIntervalId)  
   },
   methods: {    
-    load(firstLoad = false, userRequest = false) {      
+    load(firstLoad = false, userRequest = false) {    
+      if (!this.address) return
+      
       if (userRequest && this.balancesUpdatedSeconds < 10) return tools.toastrWarning('You may only manually refresh every 10 seconds')
       this.balancesUpdatedSeconds = 0
 
-      this.loadBalances(true)
+      this.loadBalances(firstLoad || userRequest)
       this.loadWithdrawAddress()
       if (!userRequest) this.loadValidators()
-      if (firstLoad) this.loadCoinPrice()
+      if (firstLoad && !userRequest) this.loadCoinPrice()
 
       this.startLoadInterval()
     },
     startLoadInterval() {
       if (this.loadIntervalId) clearInterval(this.loadIntervalId)
-      store.dispatch(SET_LOAD_INTERVAL_ID, setInterval(() => this.load(true), 60000))
+      store.dispatch(SET_LOAD_INTERVAL_ID, setInterval(() => this.load(), 60000))
     },
     async fetch(url) {
       let response = await fetch(url);

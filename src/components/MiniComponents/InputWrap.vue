@@ -1,7 +1,7 @@
 <template>
   <div class="input-wrap" :class="cls">
     <label v-if="input">{{placeholder}}</label>
-    <input :type="actualType" :placeholder="placeholder" v-model="input" :class="inputCls">
+    <input ref="input" :type="actualType" :placeholder="placeholder" v-model="input" :class="inputCls" @keydown="$emit('keydown', $event)">
     <div v-if="type==='password'" class="input-show" :class="{ show: showText }" @click="showText = !showText"></div>
   </div>  
 </template>
@@ -33,10 +33,20 @@ export default {
       showText: false
     }
   },
+  watch: {
+    input(val) {
+      this.$emit('input', val)
+    }
+  },
   computed: {
     actualType() {
       if (this.type === 'password') return this.showText ? 'text' : 'password'
       return this.type
+    }
+  },
+  methods: {
+    focus() {
+      this.$refs.input.focus()
     }
   }
 }

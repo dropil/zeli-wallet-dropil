@@ -8,14 +8,12 @@
       <HeaderNetworks />
 
       <ul class="mininav">
-        <li>
-          <router-link to="/">Home</router-link>
-          <router-link to="/create">Create a Wallet</router-link>
-          <router-link to="/access">Access Wallet</router-link>
-          <router-link v-if="meta.coin==='Dropil' && meta.environment==='Testnet'" to="/faucet">Faucet</router-link>
-          <a :href="meta.docsUrl">Docs <i class="far fa-external-link"></i></a>
-          <a :href="meta.websiteUrl">Website <i class="far fa-external-link"></i></a>
-        </li>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/create">Create a Wallet</router-link></li>
+        <li><router-link to="/access">Access Wallet</router-link></li>
+        <li><router-link v-if="meta.coin==='Dropil' && meta.environment==='Testnet'" to="/faucet">Faucet</router-link></li>
+        <li><a :href="meta.docsUrl">Docs <i class="far fa-external-link"></i></a></li>
+        <li><a :href="meta.websiteUrl">Website <i class="far fa-external-link"></i></a></li>
       </ul>
 
       <div class="submenu">

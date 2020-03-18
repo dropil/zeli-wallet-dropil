@@ -3,7 +3,7 @@
     <div class="app-main page" :class="[pageClass]">
       <div class="main">
         <Header />
-        <transition name="animation-fade" mode="out-in">
+        <transition name="animation-fade-fast" mode="out-in">
           <router-view />
         </transition>
       </div>

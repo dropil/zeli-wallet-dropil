@@ -549,6 +549,12 @@ a.add {
     border-color: $c-red;
     color: $c-red;
   }
+
+  &.neutral {
+    background-color: rgba($c-well-bg, 0.2);
+    border-color: $c-border;
+    color: $c-grey-font;
+  }
 }
 
 .vue-tooltip-theme {
@@ -683,6 +689,10 @@ a.add {
     padding-left: 2em;
     padding-right: 2em;  
   }
+
+  &.md {
+    max-width: 1200px;
+  }
 }
 
 .verify-domain {
@@ -706,4 +716,22 @@ a.add {
       color: $c-green;
     }
   }
+}
+
+.grid-row {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+.iziToast-wrapper {
+  padding: 5px;
+
+  .iziToast {
+    box-shadow: $shadow-light;
+
+    @media #{$bp-grande} {
+      box-shadow: none;
+    }
+  }  
 }

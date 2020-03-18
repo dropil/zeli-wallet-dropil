@@ -9,12 +9,12 @@
         <ul class="nav">
           <li>
             <a href="https://dropilchain.com">Website</a>
+          </li>          
+          <li>
+            <a href="https://github.com/dropil/dropil-chain-app">Github</i></a>
           </li>
           <li>
             <a href="https://home.dropil.com/support">Support</a>
-          </li>
-          <li>
-            <a target="_blank" href="https://dropil.com/the-press">News</a>
           </li>
           <li>
             <a target="_blank" href="https://dropil.com/terms-of-use">Terms of Service</a>

@@ -23,10 +23,6 @@ import VueIziToast from 'vue-izitoast'
 import 'izitoast/dist/css/iziToast.min.css'
 Vue.use(VueIziToast)
 
-import jquery from 'jquery'
-window.$ = jquery
-window.JQuery = jquery
-
 // store
 import store from './store'
 import { SHOW_POPUP } from './store/actions.type'
@@ -58,10 +54,9 @@ function copy (text) {
   var textToCopy = text
 
   var input = document.createElement('input')
+  input.classList.add('copy-input')
+  input.value = textToCopy
   document.body.appendChild(input)
-  window.$(input)
-    .val(textToCopy)
-    .addClass('copy-input')
 
   if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
     input.contentEditable = true
@@ -80,7 +75,6 @@ function copy (text) {
   input.remove()
 
   tools.toastr({type: 'success', message: 'Copied to clipboard', title: 'Copied!', timeout: 1500})
-  //window.vm.$toast.success('Copied to clipboard', 'Copied!')
 }
 
 window.showPopup = showPopup

@@ -82,7 +82,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['meta', 'address'])
+    ...mapGetters(['meta', 'address', 'loadIntervalId', 'balancesIntervalId'])
   },
   beforeRouteEnter (to, from, next) {
     store.dispatch(RESET_ALL_ACCESS)
@@ -110,7 +110,7 @@ export default {
   mounted() {
     this.$root.$on('disconnect', () => this.disconnect(true))
   },
-  destroyed() {      
+  destroyed() {     
     this.disconnect(true)
   }
 }

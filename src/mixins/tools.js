@@ -1,5 +1,8 @@
 import store from '../store'
 import { SET_TAB_STATE } from '../store/actions.type'
+import aes from 'aes-js'
+import pbkdf2 from 'pbkdf2'
+import crypto from 'crypto'
 
 export const tools = {
   lang: {
@@ -232,6 +235,31 @@ export const tools = {
       window.vm.$root.$emit('loadBalances')
     }, 10000)
   },
+  encryptSaveData(mnemonic, name, password) {        
+    let salt = crypto.randomBytes(16).toString('hex')
+    let key = pbkdf2.pbkdf2Sync(password, salt, 1, 32, 'sha512')        
+    let mnemonicBytes = aes.utils.utf8.toBytes(mnemonic)
+
+    // encrypt mnemonic
+    let aesCtr = new aes.ModeOfOperation.ctr(key)
+    let encryptedBytes = aesCtr.encrypt(mnemonicBytes)
+    let encrypted = aes.utils.hex.fromBytes(encryptedBytes)        
+
+    return { name, salt, mnemonic: encrypted }
+  },
+  decryptSaveData(saveDataString, password) {
+    let saveData = JSON.parse(saveDataString)            
+    let salt = saveData.salt
+    let key = pbkdf2.pbkdf2Sync(password, salt, 1, 32, 'sha512')        
+    let mnemonicBytes = aes.utils.hex.toBytes(saveData.mnemonic)
+
+    // decrypt mnemonic
+    let aesCtr = new aes.ModeOfOperation.ctr(key)
+    let decryptedBytes = aesCtr.decrypt(mnemonicBytes)
+    let mnemonic = aes.utils.utf8.fromBytes(decryptedBytes)
+
+    return mnemonic
+  }
 }
 
 export default tools

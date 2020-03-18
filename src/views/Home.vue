@@ -1,5 +1,5 @@
 <template>
-  <div class="main-content" key="home">
+  <div class="main-content md" key="home">
     <h3>{{meta.chainAndEnvironment}}</h3>
     <p class="desc">Resources available to help you utilize {{meta.chainName}}.</p>
 
