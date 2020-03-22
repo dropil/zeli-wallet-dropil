@@ -7,9 +7,7 @@ import crypto from 'crypto'
 export const tools = {
   lang: {
     url: process.env.VUE_APP_ENV_URL,
-    urlShort: process.env.VUE_APP_ENV_URL.replace('https://', ''),
-    explorerUrl: process.env.VUE_APP_EXPLORER_URL,
-    apiUrl: process.env.VUE_APP_API_URL
+    urlShort: process.env.VUE_APP_ENV_URL.replace('https://', '')    
   },
   localStorage: {
     set (key, value) {
