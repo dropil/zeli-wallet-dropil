@@ -4,8 +4,11 @@ import router from './router'
 
 import 'normalize.css'
 
-window.dropjs = require('./drop')
-//window.dropjs = require('@dropilcoin/dropjs')
+// development of @dropilcoin/dropjs npm package
+//window.dropjs = require('./drop')
+
+// production version of drop.js
+window.dropjs = require('@dropilcoin/dropjs')
 
 import VueAnalytics from 'vue-analytics'
 Vue.use(VueAnalytics, {

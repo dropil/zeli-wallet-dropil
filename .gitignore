@@ -20,6 +20,8 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+# The purpose of the drop.js gitignore is that drop.js is the
+# development version of the @dropilcoin/dropjs npm package
 src/drop.js
 public/assets/css
 public/assets/css/*
