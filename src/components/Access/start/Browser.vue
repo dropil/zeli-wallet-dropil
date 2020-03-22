@@ -1,8 +1,8 @@
 <template>
-  <div class="form saved">
-    <h3>Access stored wallet</h3>
+  <div class="form browser">
+    <h3>Access Browser Saved Wallet</h3>
     <p>
-      You may access a previously stored wallet by selecting the wallet from the dropdown
+      You may access a previously saved wallet in your browser by selecting the wallet from the dropdown
       and entering the password used to encrypt your wallet.          
     </p>        
 
@@ -11,12 +11,21 @@
       clicking the delete button.
     </p>
 
-    <div class="select-wrap">
+    <div class="select-wrap" :class="{marg:name==='Select a wallet'}">
       <select v-model='name'>
         <option>Select a wallet</option>
         <option v-for="o in options" :key="o">{{o}}</option>
       </select>
     </div>        
+
+    <div class="delete" v-if="name!=='Select a wallet'">
+      <a class="first" @click="confirmDelete=true" v-if="!confirmDelete">Delete Saved Wallet</a>
+      <p v-if="confirmDelete">
+        Are you sure? 
+        <a class="btn g" @click="deleteWallet()">Yes</a>
+        <a class="btn r" @click="confirmDelete=false">No</a>
+      </p>
+    </div>
 
     <InputWrap ref="password" v-model="password" :type="'password'" :placeholder="'Enter password'" @keydown.enter="access()" />
 
@@ -43,7 +52,7 @@ import { SET_MNEMONIC, SET_ADDRESS } from '../../../store/actions.type'
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Saved',
+  name: 'Browser',
   components: { Checkbox, InputWrap },
   computed: {
     ...mapGetters(['meta'])    
@@ -52,7 +61,8 @@ export default {
     return {
       name: '',
       password: '',
-      options: []
+      options: [],
+      confirmDelete: false
     }
   },
   mounted() {
@@ -61,14 +71,23 @@ export default {
   methods: {
     loadSavedWallets() {
       let savedWalletNames = tools.localStorage.get('savedWalletNames') || ''
-      this.options = savedWalletNames === '' ? [] : savedWalletNames.split('|')
-
-      if (!this.options.length) {
+      if (!savedWalletNames) {
         this.$emit('reset')
         tools.toastrWarning('You do not have any saved wallets yet. You can save a wallet by selecting the Mnemonic Phrase method.')
       }
 
+      this.options = savedWalletNames.split('|')      
       this.name = 'Select a wallet'
+    },
+    deleteWallet() {            
+      let existingWallets = (tools.localStorage.get('savedWalletNames') || '').split('|')
+      existingWallets = existingWallets.filter(a => a !== this.name)
+
+      tools.localStorage.set('savedWalletNames', existingWallets.join('|'))
+      tools.localStorage.delete('savedWallet_' + name)
+            
+      this.confirmDelete = false
+      this.loadSavedWallets()
     },
     async access() {
       let name = this.name

@@ -1,14 +1,12 @@
 import {
-  SET_MNEMONIC, SET_ADDRESS, SET_HD_PATH, SET_VALIDATORS, SET_TOTAL_BONDED, SET_BALANCE, SET_ACCOUNT_DATA, RESET_BALANCES, SET_DELEGATIONS, SET_REWARDS, SET_UNBONDING, SET_TAB_STATE, RESET_TAB_STATE,
+  SET_CREATE_MNEMONIC, SET_CREATE_ADDRESS, SET_MNEMONIC, SET_ADDRESS, SET_HD_PATH, SET_VALIDATORS, SET_TOTAL_BONDED, SET_BALANCE, SET_ACCOUNT_DATA, RESET_BALANCES, SET_DELEGATIONS, SET_REWARDS, SET_UNBONDING, SET_TAB_STATE, RESET_TAB_STATE,
   SET_LOAD_INTERVAL_ID, SET_BALANCES_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE
 } from './actions.type'
 
 import {
-  COMMIT_MNEMONIC, COMMIT_ADDRESS, COMMIT_HD_PATH, COMMIT_VALIDATORS, COMMIT_TOTAL_BONDED, COMMIT_BALANCE, COMMIT_BALANCES_UPDATED_SECONDS, COMMIT_ACCOUNT_DATA, COMMIT_RESET_BALANCES, COMMIT_DELEGATIONS, COMMIT_REWARDS, COMMIT_UNBONDING, COMMIT_TAB_STATE, COMMIT_RESET_TAB_STATE,
+  COMMIT_CREATE_MNEMONIC, COMMIT_CREATE_ADDRESS, COMMIT_MNEMONIC, COMMIT_ADDRESS, COMMIT_HD_PATH, COMMIT_VALIDATORS, COMMIT_TOTAL_BONDED, COMMIT_BALANCE, COMMIT_BALANCES_UPDATED_SECONDS, COMMIT_ACCOUNT_DATA, COMMIT_RESET_BALANCES, COMMIT_DELEGATIONS, COMMIT_REWARDS, COMMIT_UNBONDING, COMMIT_TAB_STATE, COMMIT_RESET_TAB_STATE,
   COMMIT_LOAD_INTERVAL_ID, COMMIT_BALANCES_INTERVAL_ID, COMMIT_BALANCES_UPDATED, COMMIT_COIN_PRICE
 } from './mutations.type'
-
-import tools from '../mixins/tools'
 
 const BASE_TAB_FIELDS = {
   destination: "",
@@ -22,6 +20,14 @@ const BASE_TAB_FIELDS = {
 };
 
 const state = {
+  create: {
+    mnemonic: '',
+    address: ''    
+  },
+  saveOptions: {
+    keystore: false,
+    browser: false
+  },
   mnemonic: '',
   address: '',
   hdPath: '44/495/0/0/0',
@@ -53,6 +59,15 @@ const state = {
 }
 
 const getters = {
+  createMnemonic (state) {
+    return state.create.mnemonic
+  },
+  createAddress(state) {
+    return state.create.address
+  },
+  createSave (state) {
+    return state.create.save
+  },
   mnemonic (state) {
     return state.mnemonic
   },
@@ -116,6 +131,12 @@ const getters = {
 }
 
 const actions = {
+  [SET_CREATE_MNEMONIC] ({ commit }, mnemonic) {
+    commit(COMMIT_CREATE_MNEMONIC, mnemonic)
+  },
+  [SET_CREATE_ADDRESS] ({ commit }, address) {
+    commit(COMMIT_CREATE_ADDRESS, address)
+  },
   [SET_MNEMONIC] ({ commit }, mnemonic) {
     commit(COMMIT_MNEMONIC, mnemonic)
   },
@@ -196,6 +217,12 @@ const actions = {
 }
 
 const mutations = {
+  [COMMIT_CREATE_MNEMONIC] (state, mnemonic) {
+    state.create.mnemonic = mnemonic
+  },
+  [COMMIT_CREATE_ADDRESS] (state, address) {
+    state.create.address = address
+  },  
   [COMMIT_MNEMONIC] (state, mnemonic) {
     state.mnemonic = mnemonic
   },

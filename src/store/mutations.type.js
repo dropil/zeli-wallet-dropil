@@ -19,6 +19,9 @@ export const COMMIT_PREVENT_SHOW_POPUP = 'commitPreventShowPopup'
 
 
 // wallet
+export const COMMIT_CREATE_MNEMONIC = 'commitCreateMnemonic'
+export const COMMIT_CREATE_ADDRESS = 'commitCreateAddress'
+export const COMMIT_SAVE_OPTIONS = 'commitSaveOptions'
 export const COMMIT_MNEMONIC = 'commitMnemonic'
 export const COMMIT_ADDRESS = 'commitAddress'
 export const COMMIT_HD_PATH = 'commitHdPath'

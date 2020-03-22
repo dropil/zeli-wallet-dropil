@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <h3>Transaction successfully broadcasted!</h3>
+    <h3>Transaction Successfully Broadcasted!</h3>
     <p>Below is the broadcast response from the node.</p>
     <div class="broadcasted-tx">{{JSON.stringify(json, null, 4)}}</div>
 

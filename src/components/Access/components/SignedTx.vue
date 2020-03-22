@@ -1,10 +1,10 @@
 <template>
   <div class="section">
-    <h3>Transaction successfully signed!</h3>
+    <h3>Transaction Successfully Signed!</h3>
     <p>Below is the raw signed transaction JSON. You may use this to broadcast this transaction via any method of your choosing.</p>
     <div class="signed-tx">{{JSON.stringify(signedTx)}}</div>
 
-    <h3>Broadcast transaction</h3>
+    <h3>Broadcast Transaction</h3>
     <div class="text-button">
       <p>
         You may broadcast your transaction to the {{meta.chainAndEnvironment}} network using the public API that {{meta.chainName}} offers by clicking the broadcast button.

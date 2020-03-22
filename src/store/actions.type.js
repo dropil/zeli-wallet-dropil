@@ -19,6 +19,8 @@ export const CLOSE_POPUP = 'closePopup'
 export const TWO_FACTOR = 'twoFactor'
 
 // wallet
+export const SET_CREATE_MNEMONIC = 'setCreateMnemonic'
+export const SET_CREATE_ADDRESS = 'setCreateAddress'
 export const SET_MNEMONIC = 'setMnemonic'
 export const SET_ADDRESS = 'setAddress'
 export const SET_HD_PATH = 'setHdPath'
