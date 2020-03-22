@@ -147,7 +147,7 @@ const actions = {
     commit(COMMIT_HD_PATH, hdPath)
   },
   [SET_ACCOUNT_DATA] ({ commit }, { type, value }) {
-    commit(COMMIT_ACCOUNT_DATA, type, value)
+    commit(COMMIT_ACCOUNT_DATA, { type, value })
   },
   [SET_REWARDS] ({ commit }, rewards) {
     commit(COMMIT_REWARDS, rewards)
