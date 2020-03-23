@@ -7,7 +7,7 @@
     "build": "grunt live && vue-cli-service build"
   },
   "dependencies": {
-    "@dropilcoin/dropjs": "^1.6.1",
+    "@dropilcoin/dropjs": "^2.0.0",
     "@fortawesome/fontawesome-pro": "^5.12.1",
     "aes-js": "^3.1.2",
     "axios": "^0.19.2",
