@@ -82,7 +82,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['meta', 'address', 'loadIntervalId', 'balancesIntervalId'])
+    ...mapGetters(['meta', 'address', 'loadIntervalId'])
   },
   beforeRouteEnter (to, from, next) {
     store.dispatch(RESET_ALL_ACCESS)
@@ -94,13 +94,13 @@ export default {
       if (subtab) setTimeout(() => this.$root.$emit('switchSubTab', subtab), 200)
     },
     disconnect(destroyed = false) {
-      if (this.loadIntervalId) clearInterval(this.loadIntervalId)
-      if (this.balancesIntervalId) clearInterval(this.balancesIntervalId)
+      clearInterval(this.loadIntervalId)      
 
       store.dispatch(RESET_ALL_ACCESS)
 
       this.$emit('unload')
       this.$root.$off('disconnect')
+
       if (!destroyed) tools.toastrSuccess("Successfully disconnected from wallet");
     },
     reset(type) {      

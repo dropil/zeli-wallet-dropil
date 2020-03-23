@@ -195,7 +195,7 @@ import store from '../../../store'
 import { SET_BALANCE, RESET_BALANCES, SET_ACCOUNT_DATA, SET_VALIDATORS, 
   SET_TOTAL_BONDED, SET_DELEGATIONS, SET_UNBONDING, 
   SET_REWARDS, SET_LOAD_INTERVAL_ID, SET_BALANCES_UPDATED, 
-  SET_BALANCES_INTERVAL_ID, RESET_TAB_STATE, SET_TAB_STATE, SET_COIN_PRICE 
+  RESET_TAB_STATE, SET_TAB_STATE, SET_COIN_PRICE 
   } from '../../../store/actions.type'
 import VueQrcode from "vue-qrcode";
 import Countdown from "../../MiniComponents/Countdown";
@@ -205,7 +205,7 @@ export default {
   components: { VueQrcode, Countdown },    
   computed: {
     ...mapGetters(["meta", "address", "hdPath", "balances", "balancesUpdated", 
-      "loadIntervalId", "balancesIntervalId", "delegations", "rewards", "unbonding", 
+      "loadIntervalId", "delegations", "rewards", "unbonding", 
       "validators", "totalBonded", "coinPrice"]),
     totalBalance() {
       return String(
@@ -224,123 +224,37 @@ export default {
   },
   data() {
     return {
+      balancesIntervalId: 0,
       balancesUpdatedSeconds: 0
     }
   },
   mounted() {
-    if (this.balancesUpdated) this.balancesUpdatedSeconds = new Date(Date.now() - this.balancesUpdated).getSeconds()      
+    if (this.balancesUpdated) 
+      this.balancesUpdatedSeconds = new Date(Date.now() - this.balancesUpdated).getSeconds()      
     
     let firstLoad = !this.balancesUpdatedSeconds || this.balancesUpdatedSeconds > 60    
     
     if (firstLoad) this.load(true)
-    else this.startBalancesUpdatedInterval()
-      
-    this.$root.$on('loadBalances', () => this.load())
+    else this.startBalancesUpdatedInterval()    
   },
   destroyed() {
-    this.$root.$off('loadBalances')
-    if (this.balancesIntervalId) clearInterval(this.balancesIntervalId)  
+    clearInterval(this.balancesIntervalId)    
   },
   methods: {    
     load(firstLoad = false, userRequest = false) {    
-      if (!this.address) return
-      
-      if (userRequest && this.balancesUpdatedSeconds < 10) return tools.toastrWarning('You may only manually refresh every 10 seconds')
+      if (userRequest && this.balancesUpdatedSeconds < 10)
+        return tools.toastrWarning('You may only manually refresh every 10 seconds')      
+
       this.balancesUpdatedSeconds = 0
+      tools.wallet.load(firstLoad, userRequest)
 
-      this.loadBalances(firstLoad || userRequest)
-      this.loadWithdrawAddress()
-      if (!userRequest) this.loadValidators()
-      if (firstLoad && !userRequest) this.loadCoinPrice()
-
-      this.startLoadInterval()
-    },
-    startLoadInterval() {
-      if (this.loadIntervalId) clearInterval(this.loadIntervalId)
-      store.dispatch(SET_LOAD_INTERVAL_ID, setInterval(() => this.load(), 60000))
-    },
-    async fetch(url) {
-      let response = await fetch(url);
-      let data = await response.json();
-      return data;
-    }, 
-    loadBalances(firstLoad = false) {
-      if (firstLoad) store.dispatch(RESET_BALANCES)      
-
-      this.fetch(this.meta.apiUrl + `/auth/accounts/${this.address}`).then(data => {        
-        if (!data.result || !data.result.value.coins.length || !data.result.value.coins.filter(c => c.denom.toLowerCase() === this.meta.denom))
-          return store.dispatch(SET_BALANCE, { type: 'available', value: 0 });
-
-        let available = data.result.value.coins.filter(c => c.denom.toLowerCase() === this.meta.denom)[0].amount
-        store.dispatch(SET_BALANCE, { type: 'available', value: available })
-
-        store.dispatch(SET_ACCOUNT_DATA, { type: 'accountNumber', value: data.result.value.account_number })
-        store.dispatch(SET_ACCOUNT_DATA, { type: 'sequence', value: data.result.value.sequence })
-      });
-
-      this.fetch(this.meta.apiUrl + `/distribution/delegators/${this.address}/rewards`).then(
-        data => {
-          if (!data.result || !data.result.total.length || !data.result.total.filter(c => c.denom.toLowerCase() === this.meta.denom))
-            return store.dispatch(SET_BALANCE, { type: 'rewards', value: 0 });
-
-          let rewards = data.result.total.filter(c => c.denom.toLowerCase() === this.meta.denom)[0].amount
-          store.dispatch(SET_BALANCE, { type: 'rewards', value: rewards })
-          
-          store.dispatch(SET_REWARDS, data.result.rewards)
-        }
-      );
-
-      this.fetch(this.meta.apiUrl + `/staking/delegators/${this.address}/delegations`).then(
-        data => {
-          if (!data.result || !data.result.length)
-            return store.dispatch(SET_BALANCE, { type: 'delegated', value: 0 });
-          
-          let delegated = String(data.result.reduce((a, c) => a + parseInt(c.balance), 0))
-          store.dispatch(SET_BALANCE, { type: 'delegated', value: delegated })
-          
-          store.dispatch(SET_DELEGATIONS, data.result)
-        }
-      );
-
-      this.fetch(this.meta.apiUrl + `/staking/delegators/${this.address}/unbonding_delegations`).then(data => {
-        if (!data.result || !data.result.length) 
-          return store.dispatch(SET_BALANCE, { type: 'unbonding', value: 0 });
-        
-        let unbondingAmount = String(data.result.reduce((a, c) => {
-          return a + c.entries.reduce((x, y) => x + parseInt(y.balance), 0)
-        }, 0));
-        store.dispatch(SET_BALANCE, { type: 'unbonding', value: unbondingAmount })
-        
-        store.dispatch(SET_UNBONDING, data.result)
-      });     
-      
-      store.dispatch(SET_BALANCES_UPDATED, Date.now())
       this.startBalancesUpdatedInterval()
     },
     startBalancesUpdatedInterval() {      
-      if (this.balancesIntervalId) clearInterval(this.balancesIntervalId)  
-      store.dispatch(SET_BALANCES_INTERVAL_ID, setInterval(() => {
+      clearInterval(this.balancesIntervalId)  
+      this.balancesIntervalId = setInterval(() => {
         this.balancesUpdatedSeconds = new Date(Date.now() - this.balancesUpdated).getSeconds()
-      }, 1000))
-    },
-    loadCoinPrice() {
-      this.fetch('https://api.coingecko.com/api/v3/coins/' + this.meta.coinGeckoId).then(data => {        
-        store.dispatch(SET_COIN_PRICE, data.market_data.current_price.usd)
-      })
-    },
-    loadWithdrawAddress() {      
-      this.fetch(this.meta.apiUrl + `/distribution/delegators/${this.address}/withdraw_address`).then(data => {
-        store.dispatch(SET_TAB_STATE, { type: 'modifyWithdrawAddress', key: 'withdrawAddress', value: data.result })
-      });
-    },
-    loadValidators() {      
-      this.fetch(this.meta.apiUrl + `/staking/validators`).then(data => {
-        store.dispatch(SET_VALIDATORS, data.result.sort((a, b) => parseFloat(b.tokens) - parseFloat(a.tokens)))
-      });
-
-      this.fetch(this.meta.apiUrl + `/staking/pool`).then(data => {
-        store.dispatch(SET_TOTAL_BONDED, data.result.bonded_tokens)
-      });
+      }, 1000)
     },
     getMoniker(validatorAddress) {
       return tools.getMoniker(validatorAddress)

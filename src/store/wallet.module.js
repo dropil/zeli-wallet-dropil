@@ -1,11 +1,11 @@
 import {
   SET_CREATE_MNEMONIC, SET_CREATE_ADDRESS, SET_MNEMONIC, SET_ADDRESS, SET_HD_PATH, SET_VALIDATORS, SET_TOTAL_BONDED, SET_BALANCE, SET_ACCOUNT_DATA, RESET_BALANCES, SET_DELEGATIONS, SET_REWARDS, SET_UNBONDING, SET_TAB_STATE, RESET_TAB_STATE,
-  SET_LOAD_INTERVAL_ID, SET_BALANCES_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE
+  SET_LOAD_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE
 } from './actions.type'
 
 import {
   COMMIT_CREATE_MNEMONIC, COMMIT_CREATE_ADDRESS, COMMIT_MNEMONIC, COMMIT_ADDRESS, COMMIT_HD_PATH, COMMIT_VALIDATORS, COMMIT_TOTAL_BONDED, COMMIT_BALANCE, COMMIT_BALANCES_UPDATED_SECONDS, COMMIT_ACCOUNT_DATA, COMMIT_RESET_BALANCES, COMMIT_DELEGATIONS, COMMIT_REWARDS, COMMIT_UNBONDING, COMMIT_TAB_STATE, COMMIT_RESET_TAB_STATE,
-  COMMIT_LOAD_INTERVAL_ID, COMMIT_BALANCES_INTERVAL_ID, COMMIT_BALANCES_UPDATED, COMMIT_COIN_PRICE
+  COMMIT_LOAD_INTERVAL_ID, COMMIT_BALANCES_UPDATED, COMMIT_COIN_PRICE
 } from './mutations.type'
 
 const BASE_TAB_FIELDS = {
@@ -48,7 +48,6 @@ const state = {
   },
   balancesUpdated: 0,  
   loadIntervalId: 0,
-  balancesIntervalId: 0,
   send: { ...BASE_TAB_FIELDS },
   delegate: { ...BASE_TAB_FIELDS },      
   undelegate: { ...BASE_TAB_FIELDS },
@@ -103,10 +102,7 @@ const getters = {
   },  
   loadIntervalId (state) {
     return state.loadIntervalId
-  },
-  balancesIntervalId (state) {
-    return state.balancesIntervalId
-  },
+  },  
   send (state) {
     return state.send
   },
@@ -172,10 +168,7 @@ const actions = {
   },  
   [SET_LOAD_INTERVAL_ID] ({ commit }, loadIntervalId) {
     commit(COMMIT_LOAD_INTERVAL_ID, loadIntervalId)
-  },
-  [SET_BALANCES_INTERVAL_ID] ({ commit }, balancesIntervalId) {
-    commit(COMMIT_BALANCES_INTERVAL_ID, balancesIntervalId)
-  },
+  },  
   [RESET_BALANCES] ({ commit }) {
     commit(COMMIT_RESET_BALANCES)
   },
@@ -203,7 +196,6 @@ const actions = {
     dispatch(RESET_BALANCES)
     dispatch(SET_BALANCES_UPDATED, 0)
     dispatch(SET_LOAD_INTERVAL_ID, 0)
-    dispatch(SET_BALANCES_INTERVAL_ID, 0)
     dispatch(RESET_TAB_STATE, 'send')
     dispatch(RESET_TAB_STATE, 'delegate')
     dispatch(RESET_TAB_STATE, 'undelegate')
@@ -258,10 +250,7 @@ const mutations = {
   },   
   [COMMIT_LOAD_INTERVAL_ID] (state, loadIntervalId) {
     state.loadIntervalId = loadIntervalId
-  }, 
-  [COMMIT_BALANCES_INTERVAL_ID] (state, balancesIntervalId) {
-    state.balancesIntervalId = balancesIntervalId
-  }, 
+  },   
   [COMMIT_RESET_BALANCES] (state) {
     state.balancesUpdated = 0
     state.balances = {

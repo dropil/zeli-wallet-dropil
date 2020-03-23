@@ -37,13 +37,13 @@ export default {
 
     fn()
 
-    if (this.intervalId) clearInterval(this.intervalId)
+    clearInterval(this.intervalId)
     this.intervalId = setInterval(() => {
       fn()
     }, 1000)
   },
   destroyed() {
-    if (this.intervalId) clearInterval(this.intervalId)
+    clearInterval(this.intervalId)
   }
 }
 </script>

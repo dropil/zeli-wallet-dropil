@@ -1,5 +1,9 @@
 import store from '../store'
-import { SET_TAB_STATE } from '../store/actions.type'
+import { SET_BALANCE, RESET_BALANCES, SET_ACCOUNT_DATA, SET_VALIDATORS, 
+  SET_TOTAL_BONDED, SET_DELEGATIONS, SET_UNBONDING, SET_BALANCES_UPDATED,
+  SET_REWARDS, SET_LOAD_INTERVAL_ID, SET_TAB_STATE, SET_COIN_PRICE 
+} from '../store/actions.type'
+
 import aes from 'aes-js'
 import pbkdf2 from 'pbkdf2'
 import crypto from 'crypto'
@@ -228,9 +232,10 @@ export const tools = {
     store.dispatch(SET_TAB_STATE, { type, key: 'signed', value: false })
     store.dispatch(SET_TAB_STATE, { type, key: 'broadcasted', value: true })
     store.dispatch(SET_TAB_STATE, { type, key: 'broadcastResponse', value: response })
-    
+    store.dispatch(SET_ACCOUNT_DATA, { type: 'sequence', value: String(parseInt(store.state.wallet.accountData.sequence) + 1) })
+
     setTimeout(() => {
-      window.vm.$root.$emit('loadBalances')
+      tools.wallet.load()
     }, 10000)
   },
   encryptSaveData(mnemonic, name, password) {        
@@ -257,6 +262,98 @@ export const tools = {
     let mnemonic = aes.utils.utf8.fromBytes(decryptedBytes)
 
     return mnemonic
+  },
+  wallet: {
+    load(firstLoad = false, userRequest = false) {
+      if (!store.state.wallet.address) return          
+
+      tools.wallet.loadBalances(firstLoad || userRequest)
+      tools.wallet.loadWithdrawAddress()
+      if (!userRequest) tools.wallet.loadValidators()
+      if (firstLoad && !userRequest) tools.wallet.loadCoinPrice()
+
+      tools.wallet.startLoadInterval()
+    },
+    startLoadInterval() {
+      clearInterval(store.state.wallet.loadIntervalId)
+      store.dispatch(SET_LOAD_INTERVAL_ID, setInterval(() => tools.wallet.load(), 60000))      
+    },
+    loadBalances(firstLoad = false) {
+      if (firstLoad) store.dispatch(RESET_BALANCES)      
+
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/auth/accounts/${store.state.wallet.address}`).then(data => {        
+        if (!data.result || !data.result.value.coins.length || !data.result.value.coins.filter(c => c.denom.toLowerCase() === store.state.general.meta.denom))
+          return store.dispatch(SET_BALANCE, { type: 'available', value: 0 });
+
+        let available = data.result.value.coins.filter(c => c.denom.toLowerCase() === store.state.general.meta.denom)[0].amount
+        store.dispatch(SET_BALANCE, { type: 'available', value: available })
+
+        store.dispatch(SET_ACCOUNT_DATA, { type: 'accountNumber', value: data.result.value.account_number })
+        store.dispatch(SET_ACCOUNT_DATA, { type: 'sequence', value: data.result.value.sequence })
+      })
+
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/distribution/delegators/${store.state.wallet.address}/rewards`).then(
+        data => {
+          if (!data.result || !data.result.total.length || !data.result.total.filter(c => c.denom.toLowerCase() === store.state.general.meta.denom))
+            return store.dispatch(SET_BALANCE, { type: 'rewards', value: 0 });
+
+          let rewards = data.result.total.filter(c => c.denom.toLowerCase() === store.state.general.meta.denom)[0].amount
+          store.dispatch(SET_BALANCE, { type: 'rewards', value: rewards })
+          
+          store.dispatch(SET_REWARDS, data.result.rewards)
+        }
+      )
+
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/delegators/${store.state.wallet.address}/delegations`).then(
+        data => {
+          if (!data.result || !data.result.length)
+            return store.dispatch(SET_BALANCE, { type: 'delegated', value: 0 });
+          
+          let delegated = String(data.result.reduce((a, c) => a + parseInt(c.balance), 0))
+          store.dispatch(SET_BALANCE, { type: 'delegated', value: delegated })
+          
+          store.dispatch(SET_DELEGATIONS, data.result)
+        }
+      )
+
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/delegators/${store.state.wallet.address}/unbonding_delegations`).then(data => {
+        if (!data.result || !data.result.length) 
+          return store.dispatch(SET_BALANCE, { type: 'unbonding', value: 0 });
+        
+        let unbondingAmount = String(data.result.reduce((a, c) => {
+          return a + c.entries.reduce((x, y) => x + parseInt(y.balance), 0)
+        }, 0));
+        store.dispatch(SET_BALANCE, { type: 'unbonding', value: unbondingAmount })
+        
+        store.dispatch(SET_UNBONDING, data.result)
+      })
+
+      store.dispatch(SET_BALANCES_UPDATED, Date.now())
+    },
+    async fetch(url) {
+      let response = await fetch(url);
+      let data = await response.json();
+      return data;
+    },
+    loadWithdrawAddress() {
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/distribution/delegators/${store.state.wallet.address}/withdraw_address`).then(data => {
+        store.dispatch(SET_TAB_STATE, { type: 'modifyWithdrawAddress', key: 'withdrawAddress', value: data.result })
+      })
+    },
+    loadValidators() {
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/validators`).then(data => {
+        store.dispatch(SET_VALIDATORS, data.result.sort((a, b) => parseFloat(b.tokens) - parseFloat(a.tokens)))
+      })
+
+      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/pool`).then(data => {
+        store.dispatch(SET_TOTAL_BONDED, data.result.bonded_tokens)
+      })
+    },
+    loadCoinPrice() {
+      tools.wallet.fetch('https://api.coingecko.com/api/v3/coins/' + store.state.general.meta.coinGeckoId).then(data => {
+        store.dispatch(SET_COIN_PRICE, data.market_data.current_price.usd)
+      })
+    }
   }
 }
 
