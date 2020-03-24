@@ -10,19 +10,22 @@
 
       <Footer />
     </div>
+
+    <Popups />
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/Header"
+import Footer from "./components/Footer"
+import Popups from './views/Popups'
 
 import tools from "./mixins/tools";
 import { mapGetters } from "vuex";
 
 export default {
   name: "App",
-  components: { Header, Footer },
+  components: { Header, Footer, Popups },
   computed: {
     ...mapGetters(["pageClass"]),
     includeHeader() {

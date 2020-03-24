@@ -193,6 +193,15 @@ input {
     border-bottom: 1px solid $c-border;
     width: 100%;
     padding: 0.5em 0;
+
+    &.address {      
+      padding: .5em 1em;
+      background-color: #eef2f7;
+      color: #222b3d;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid #C9D5E7;            
+    }
   }
 
   &[type="radio"] {
@@ -421,4 +430,8 @@ label {
 
 .bold {
   font-weight: 600;
+}
+
+.justify {
+  text-align: justify !important;
 }

@@ -3,12 +3,14 @@ import Vuex from 'vuex'
 
 import general from './general.module'
 import wallet from './wallet.module'
+import popups from './popups.module'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     general,
-    wallet
+    wallet,
+    popups
   }
 })

@@ -15,8 +15,12 @@
 
     <transition name="animation-fade">
       <div class="upload" v-if="!isSuccess">
-        <div class="file-upload">
-          <input type="file" id="file" ref="file" :disabled="isSaving" @change="handleFileUpload()">
+        <div ref="fileUpload" class="file-upload" :class="{'drag-hover': dragHover}">
+          <input type="file" id="file" ref="file" :disabled="isSaving" 
+            @change="handleFileUpload()"
+            @dragenter="dragHover = true" 
+            @dragleave="dragHover = false"
+          >
 
           <p v-if="isInitial || isFailed">
             <i class="fad fa-file"></i>
@@ -70,8 +74,6 @@ import Checkbox from '../../MiniComponents/Checkbox'
 import InputWrap from '../../MiniComponents/InputWrap'
 import tools from '../../../mixins/tools';
 import { mapGetters } from 'vuex';
-import store from '../../../store';
-import { SET_MNEMONIC, SET_ADDRESS } from '../../../store/actions.type';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
 export default {
@@ -80,6 +82,7 @@ export default {
   data() {
     return {     
       currentStatus: null,
+      dragHover: false,
       saveData: {},
       password: ''
     }
@@ -140,10 +143,9 @@ export default {
       let address = String(await drop.getAddress(mnemonic).catch(ex => ex.message));
 
       if (!address.startsWith(this.meta.bech32Prefix))
-        return tools.toastrError("Mnemonic entered did not unlock a valid " + this.meta.bech32Prefix + ' wallet');
+        return tools.toastrError("Mnemonic entered did not unlock a valid " + this.meta.bech32Prefix + ' wallet');      
 
-      store.dispatch(SET_MNEMONIC, mnemonic);
-      store.dispatch(SET_ADDRESS, address);
+      tools.wallet.access(mnemonic, address)
 
       if (!this.save) tools.toastrSuccess('Successfully connected to wallet')
       this.$emit('load')

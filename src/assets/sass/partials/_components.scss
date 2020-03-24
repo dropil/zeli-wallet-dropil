@@ -766,13 +766,21 @@ a.add {
   outline: 2px dashed $c-grey-font;
   outline-offset: -10px;
   background: #e8f0ff;
-  padding: 10px 10px;
   min-height: 200px;
   position: relative;
   cursor: pointer;
 
   &:hover {
     background: #ccd9f3;
+  }
+
+  &.drag-hover {
+    background: #ccd9f3;
+    outline-style: solid;
+
+    p {
+      opacity: 0.2;
+    }
   }
 
   input {
@@ -787,6 +795,7 @@ a.add {
     font-size: 1.2em;
     text-align: center !important;
     padding: 50px 0;
+    pointer-events: none;
 
     i {
       font-size: 50px;

@@ -1,6 +1,6 @@
 export default {
-  'mainnet': {
-    'cosmoshub-3': {
+  'mainnet': [
+    {
       chainId: 'cosmoshub-3',
       chainName: 'Cosmos Hub',
       environment: 'Mainnet',
@@ -29,23 +29,18 @@ export default {
       tickerPlural: 'Atoms',
       bech32Prefix: 'cosmos',
       hdPath: "m/44'/118'/0'/0/0",
+      hdPathPretty: '44/118/0/0/0',
       mnemonicLengths: '12/16/24',
       baseFee: 5000, //denom
       baseFeeCoin: 0.005, //coin
       baseGas: 200000, // denom
       powerReduction: 1000000,
       decimals: 6
-    },
-    'irishub': {
-
     }
-  },
-  'testnet': {
-
-  },
-  'development': {
-    'dropilchain-testnet': {
-      chainId: 'dropilchain-testnet',
+  ],
+  'testnet': [
+    {
+      chainId: 'Dropil-Chain-Poseidon',
       chainName: 'Dropil Chain',
       environment: 'Testnet',
       environmentLower: 'testnet',
@@ -72,13 +67,17 @@ export default {
       tickerLower: 'drop',
       tickerPlural: 'Drops',
       bech32Prefix: 'drop',
-      hdPath: "m/44'/118'/0'/0/0",    
+      hdPath: "m/44'/495'/0'/0/0",    
+      hdPathPretty: '44/495/0/0/0',
       mnemonicLengths: '24',
-      baseFee: 1000000, //denom (udrop)
+      baseFee: 10000, //denom (udrop)
       baseFeeCoin: 1, //coin (DROP)
       baseGas: 200000,
       powerReduction: 1000000,
       decimals: 6
     }
-  }    
+  ],
+  'development': [
+    
+  ]  
 }

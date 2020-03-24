@@ -47,8 +47,6 @@
 import Checkbox from '../../MiniComponents/Checkbox'
 import InputWrap from '../../MiniComponents/InputWrap'
 import tools from '../../../mixins/tools'
-import store from '../../../store'
-import { SET_MNEMONIC, SET_ADDRESS } from '../../../store/actions.type'
 import { mapGetters } from 'vuex';
 
 export default {
@@ -133,9 +131,7 @@ export default {
       if (!address.startsWith(this.meta.bech32Prefix))
         return tools.toastrError("Mnemonic retrieved with provided password did not unlock a valid " + this.meta.bech32Prefix + ' wallet');
 
-      // access wallet      
-      store.dispatch(SET_MNEMONIC, mnemonic);
-      store.dispatch(SET_ADDRESS, address);
+      tools.wallet.access(mnemonic, address)
 
       tools.toastrSuccess('Successfully connected to wallet')
       this.$emit('load')      

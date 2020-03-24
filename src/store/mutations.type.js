@@ -11,6 +11,7 @@ export const COMMIT_REMOVE_ENTRY_URL = 'commitRemoveEntryUrl'
 // general
 export const COMMIT_PAGE_CLASS = 'commitPageClass'
 export const COMMIT_META = 'commitMeta'
+export const COMMIT_META_VALUE = 'commitMetaValue'
 
 // popups
 export const COMMIT_SHOW_POPUP = 'commitShowPopup'
@@ -25,6 +26,7 @@ export const COMMIT_SAVE_OPTIONS = 'commitSaveOptions'
 export const COMMIT_MNEMONIC = 'commitMnemonic'
 export const COMMIT_ADDRESS = 'commitAddress'
 export const COMMIT_HD_PATH = 'commitHdPath'
+export const COMMIT_HD_PATH_PRETTY = 'commitHdPathPretty'
 export const COMMIT_ACCOUNT_DATA = 'commitAccountData'
 export const COMMIT_VALIDATORS = 'commitValidators'
 export const COMMIT_TOTAL_BONDED = 'commitTotalBonded'

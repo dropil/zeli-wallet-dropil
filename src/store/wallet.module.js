@@ -1,12 +1,15 @@
 import {
-  SET_CREATE_MNEMONIC, SET_CREATE_ADDRESS, SET_MNEMONIC, SET_ADDRESS, SET_HD_PATH, SET_VALIDATORS, SET_TOTAL_BONDED, SET_BALANCE, SET_ACCOUNT_DATA, RESET_BALANCES, SET_DELEGATIONS, SET_REWARDS, SET_UNBONDING, SET_TAB_STATE, RESET_TAB_STATE,
-  SET_LOAD_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE
+  SET_CREATE_MNEMONIC, SET_CREATE_ADDRESS, SET_MNEMONIC, SET_ADDRESS, SET_HD_PATH, SET_HD_PATH_PRETTY, SET_VALIDATORS, SET_TOTAL_BONDED, SET_BALANCE, SET_ACCOUNT_DATA, RESET_BALANCES, SET_DELEGATIONS, SET_REWARDS, SET_UNBONDING, SET_TAB_STATE, RESET_TAB_STATE,
+  SET_LOAD_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE, SET_META, SET_META_VALUE
 } from './actions.type'
 
 import {
-  COMMIT_CREATE_MNEMONIC, COMMIT_CREATE_ADDRESS, COMMIT_MNEMONIC, COMMIT_ADDRESS, COMMIT_HD_PATH, COMMIT_VALIDATORS, COMMIT_TOTAL_BONDED, COMMIT_BALANCE, COMMIT_BALANCES_UPDATED_SECONDS, COMMIT_ACCOUNT_DATA, COMMIT_RESET_BALANCES, COMMIT_DELEGATIONS, COMMIT_REWARDS, COMMIT_UNBONDING, COMMIT_TAB_STATE, COMMIT_RESET_TAB_STATE,
+  COMMIT_CREATE_MNEMONIC, COMMIT_CREATE_ADDRESS, COMMIT_MNEMONIC, COMMIT_ADDRESS, COMMIT_HD_PATH, COMMIT_HD_PATH_PRETTY, COMMIT_VALIDATORS, COMMIT_TOTAL_BONDED, COMMIT_BALANCE, COMMIT_BALANCES_UPDATED_SECONDS, COMMIT_ACCOUNT_DATA, COMMIT_RESET_BALANCES, COMMIT_DELEGATIONS, COMMIT_REWARDS, COMMIT_UNBONDING, COMMIT_TAB_STATE, COMMIT_RESET_TAB_STATE,
   COMMIT_LOAD_INTERVAL_ID, COMMIT_BALANCES_UPDATED, COMMIT_COIN_PRICE
 } from './mutations.type'
+
+import networks from '../config/networks'
+import store from '.';
 
 const BASE_TAB_FIELDS = {
   destination: "",
@@ -30,7 +33,8 @@ const state = {
   },
   mnemonic: '',
   address: '',
-  hdPath: '44/495/0/0/0',
+  hdPath: "m/44'/495'/0'/0/0",
+  hdPathPretty: '44/495/0/0/0',
   accountData: {
     accountNumber: 0,
     sequence: 0
@@ -75,6 +79,9 @@ const getters = {
   },
   hdPath (state) {
     return state.hdPath
+  },  
+  hdPathPretty (state) {
+    return state.hdPathPretty
   },  
   accountData (state) {
     return state.accountData
@@ -139,8 +146,17 @@ const actions = {
   [SET_ADDRESS] ({ commit }, address) {
     commit(COMMIT_ADDRESS, address)
   },
-  [SET_HD_PATH] ({ commit }, hdPath) {
+  [SET_HD_PATH] ({ commit, dispatch }, hdPath) {
+    let hdPathPretty = hdPath.replace(/m\/|'/g, '')    
+
     commit(COMMIT_HD_PATH, hdPath)
+    dispatch(SET_HD_PATH_PRETTY, hdPathPretty)
+
+    dispatch(SET_META_VALUE, { key: 'hdPath', value: hdPath })
+    dispatch(SET_META_VALUE, { key: 'hdPathPretty', value: hdPathPretty })
+  },
+  [SET_HD_PATH_PRETTY] ({ commit }, hdPathPretty) {
+    commit(COMMIT_HD_PATH_PRETTY, hdPathPretty)
   },
   [SET_ACCOUNT_DATA] ({ commit }, { type, value }) {
     commit(COMMIT_ACCOUNT_DATA, { type, value })
@@ -183,7 +199,11 @@ const actions = {
 
     commit(COMMIT_RESET_TAB_STATE, { type, newObj })
   },
-  [RESET_ALL_ACCESS] ({ dispatch }) {
+  [RESET_ALL_ACCESS] ({ dispatch }) {    
+    // reset meta to default state
+    let meta = { ...networks[store.state.general.meta.environmentLower].filter(n => n.chainId === store.state.general.meta.chainId)[0] }
+    dispatch(SET_META, meta)
+
     dispatch(SET_MNEMONIC, '')
     dispatch(SET_ADDRESS, '')
     dispatch(SET_ACCOUNT_DATA, { type: 'accountNumber', value: 0 })
@@ -223,6 +243,9 @@ const mutations = {
   },
   [COMMIT_HD_PATH] (state, hdPath) {
     state.hdPath = hdPath
+  },
+  [COMMIT_HD_PATH_PRETTY] (state, hdPathPretty) {
+    state.hdPathPretty = hdPathPretty
   },
   [COMMIT_ACCOUNT_DATA] (state, { type, value }) {
     state.accountData[type] = value

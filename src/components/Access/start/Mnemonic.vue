@@ -54,8 +54,6 @@
 import Checkbox from '../../MiniComponents/Checkbox'
 import SaveForm from '../../SaveForm'
 import tools from '../../../mixins/tools'
-import store from '../../../store'
-import { SET_MNEMONIC, SET_ADDRESS } from '../../../store/actions.type'
 import { mapGetters } from 'vuex';
 
 export default {
@@ -103,8 +101,7 @@ export default {
         this.$refs.saveForm.saveKeystore(mnemonic, address)                
       }      
 
-      store.dispatch(SET_MNEMONIC, mnemonic);
-      store.dispatch(SET_ADDRESS, address);
+      tools.wallet.access(mnemonic, address)
 
       if (!this.save) tools.toastrSuccess('Successfully connected to wallet')
       this.$emit('load')

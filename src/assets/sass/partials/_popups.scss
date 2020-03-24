@@ -1,0 +1,64 @@
+.popups {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba($c-black, 0.25);
+  z-index: 1000;
+
+  .popup {
+    @include centerer();
+    width: 684px;
+    max-width: 95%;
+    max-height: 97%;
+    overflow: hidden;
+    overflow-y: auto;
+    background-color: $c-white;
+    border: 1px solid #a8aaad;
+    padding: 25px 40px;
+    box-shadow: $shadow-light;
+    border-radius: 6px;    
+
+    p {
+      margin-bottom: .5em;
+      color: $c-black;
+    }
+
+    .complete {
+      margin-top: 1em;
+    }
+  }
+}
+
+.popup.hd-path {
+  width: 500px;
+  text-align: center;
+
+  .address {
+    font-size: 14px;
+  }
+
+  .edit {
+    margin-top: 1em;
+  }
+
+  .inputs {
+    color: $c-black;
+    font-size: 18px;
+    font-weight: 600;
+
+    * {
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    input {
+      width: 30px;      
+      font-weight: 600;
+      padding: 0;
+      text-align: center;
+      border-bottom-color: $c-black;
+    }
+  }
+}

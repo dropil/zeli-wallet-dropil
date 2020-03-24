@@ -1,36 +1,37 @@
 <template>
   <div class="networks" @click="toggle" :id="uniqueId">
     <p>network</p>
-    <div class="current"><div class="img" :class="meta.ticker.toLowerCase()"></div> {{meta.chainId}}</div>
+    <div class="current"><div class="img" :class="meta.tickerLower"></div> {{meta.chainId}}</div>
     
     <div class="dropdown" :class="{active:open}" :id="uniqueId+'-child'">
       <div class="wrapper">
         <div class="environment">        
           <p>Mainnet Networks</p>          
                   
-          <div class="network first" @click="switchNetwork('mainnet', 'cosmoshub-3')">
-            <div class="img atom"></div>
+          <div class="network" :class="{first:i===0}" v-for="(network, i) in networks.mainnet" :key="i" @click="switchNetwork('mainnet', network.chainId)">
+            <div class="img" :class="network.tickerLower"></div>
             <div class="text">
-              <div class="name">Cosmos Hub</div>
-              <div class="chain-id">cosmoshub-3</div>
+              <div class="name">{{network.chainName}}</div>
+              <div class="chain-id">{{network.chainId}}</div>
             </div>              
-          </div>            
+          </div>           
         </div>
         
         <div class="environment">
           <p>Testnet Networks</p>
-          No networks yet          
+          
+          <div class="network" :class="{first:i===0}" v-for="(network, i) in networks.testnet" :key="i" @click="switchNetwork('testnet', network.chainId)">
+            <div class="img" :class="network.tickerLower"></div>
+            <div class="text">
+              <div class="name">{{network.chainName}}</div>
+              <div class="chain-id">{{network.chainId}}</div>
+            </div>              
+          </div>     
         </div>          
 
         <div class="environment">
           <p>Development Networks</p>
-          <div class="network first" @click="switchNetwork('development', 'dropilchain-testnet')">
-            <div class="img drop"></div>
-            <div class="text">
-              <div class="name">Dropil Chain</div>
-              <div class="chain-id">dropilchain-testnet</div>
-            </div>              
-          </div>
+          No networks yet               
         </div>          
       </div>      
     </div>
@@ -53,7 +54,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['meta'])
+    ...mapGetters(['meta']),
+    networks() {
+      return networks
+    }
   },
   mounted () {    
     this.uniqueId = tools.randomString()
@@ -95,7 +99,9 @@ export default {
     switchNetwork(environment, chainId) {
       if (chainId === this.meta.chainId) return tools.toastrWarning('You are already connected to that network')
 
-      store.dispatch(SET_META, networks[environment][chainId])      
+      let meta = { ...networks[environment].filter(n => n.chainId === chainId)[0] }
+
+      store.dispatch(SET_META, meta)
       tools.toastrSuccess('You have switched to the ' + chainId + ' network')
       this.$router.push('/')
     }

@@ -28,7 +28,7 @@ Vue.use(VueIziToast)
 
 // store
 import store from './store'
-import { SHOW_POPUP } from './store/actions.type'
+import { SHOW_POPUP, CLOSE_POPUP } from './store/actions.type'
 
 // mixins
 import titleMixin from './mixins/titleMixin'
@@ -39,15 +39,17 @@ Vue.mixin(pageClassMixin)
 
 import tools from './mixins/tools'
 
-// router.beforeEach((to, from, next) => {
-//   Promise.all([store.dispatch(CHECK_AUTH)]).then(() => next())
-// })
+function popup (id) {
+  store.dispatch(SHOW_POPUP, id)  
+}
+window.popup = popup
+Vue.prototype.$popup = window.popup
 
-// import JwtService from './api/jwt.service'
-
-// router.afterEach(() => {
-//   ApiService.post('pageView', { value: JwtService.getToken() })
-// })
+function closePopups() {
+  store.dispatch(CLOSE_POPUP)
+}
+window.closePopups = closePopups
+Vue.prototype.$closePopups = window.closePopups
 
 // window mixins
 window.copy = copy
@@ -78,13 +80,6 @@ function copy (text) {
   input.remove()
 
   tools.toastr({type: 'success', message: 'Copied to clipboard', title: 'Copied!', timeout: 1500})
-}
-
-window.showPopup = showPopup
-Vue.prototype.$showPopup = window.showPopup
-
-function showPopup (popup) {
-  store.dispatch(SHOW_POPUP, popup)
 }
 
 Vue.config.productionTip = false

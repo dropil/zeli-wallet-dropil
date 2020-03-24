@@ -69,7 +69,7 @@ import Delegation from './tabs/Delegation'
 import VerifyDomain from '../VerifyDomain'
 import tools from "../../mixins/tools";
 import store from "../../store";
-import { RESET_TAB_STATE, RESET_ALL_ACCESS } from "../../store/actions.type";
+import { RESET_TAB_STATE, RESET_ALL_ACCESS, SET_HD_PATH } from "../../store/actions.type";
 import { mapGetters } from "vuex";
 
 export default {
@@ -83,11 +83,7 @@ export default {
   },
   computed: {
     ...mapGetters(['meta', 'address', 'loadIntervalId'])
-  },
-  beforeRouteEnter (to, from, next) {
-    store.dispatch(RESET_ALL_ACCESS)
-    next()
-  },
+  },  
   methods: {     
     switchTab(tab, subtab) {
       this.tab = tab
@@ -107,7 +103,7 @@ export default {
       store.dispatch(RESET_TAB_STATE, type)
     }
   },
-  mounted() {
+  mounted() {            
     this.$root.$on('disconnect', () => this.disconnect(true))
   },
   destroyed() {     

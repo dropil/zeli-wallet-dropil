@@ -1,7 +1,7 @@
 import store from '../store'
 import { SET_BALANCE, RESET_BALANCES, SET_ACCOUNT_DATA, SET_VALIDATORS, 
   SET_TOTAL_BONDED, SET_DELEGATIONS, SET_UNBONDING, SET_BALANCES_UPDATED,
-  SET_REWARDS, SET_LOAD_INTERVAL_ID, SET_TAB_STATE, SET_COIN_PRICE 
+  SET_REWARDS, SET_LOAD_INTERVAL_ID, SET_TAB_STATE, SET_COIN_PRICE, RESET_ALL_ACCESS, SET_MNEMONIC, SET_ADDRESS 
 } from '../store/actions.type'
 
 import aes from 'aes-js'
@@ -264,6 +264,11 @@ export const tools = {
     return mnemonic
   },
   wallet: {
+    access(mnemonic, address) {      
+      store.dispatch(RESET_ALL_ACCESS)
+      store.dispatch(SET_MNEMONIC, mnemonic)
+      store.dispatch(SET_ADDRESS, address)
+    },
     load(firstLoad = false, userRequest = false) {
       if (!store.state.wallet.address) return          
 

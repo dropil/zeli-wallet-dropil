@@ -21,12 +21,13 @@
       <div class="text full">
         <b>Wallet Address</b>
         <small>
-          HD derivation path: {{hdPath}}
+          HD derivation path: {{hdPathPretty}}
           <i
             class="far fa-info-circle"
             v-tooltip="'Click for more information on HD paths'"
+            @click="$popup('hd-path')"
           ></i>
-          <a class="change">Change</a>
+          <a class="change" @click="$popup('hd-path')">Change</a>
         </small>
 
         <div>
@@ -204,7 +205,7 @@ export default {
   name: 'Wallet',
   components: { VueQrcode, Countdown },    
   computed: {
-    ...mapGetters(["meta", "address", "hdPath", "balances", "balancesUpdated", 
+    ...mapGetters(["meta", "address", "hdPathPretty", "balances", "balancesUpdated", 
       "loadIntervalId", "delegations", "rewards", "unbonding", 
       "validators", "totalBonded", "coinPrice"]),
     totalBalance() {

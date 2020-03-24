@@ -10,13 +10,13 @@ export const REMOVE_AUTH = 'removeAuth'
 // general
 export const SET_PAGE_CLASS = 'setPageClass'
 export const SET_META = 'setMeta'
+export const SET_META_VALUE = 'setMetaValue'
 
 // popups
 export const SHOW_POPUP = 'showPopup'
 export const SET_POPUP = 'setPopup'
 export const SET_PREVENT_SHOW_POPUP = 'setPreventShowPopup'
 export const CLOSE_POPUP = 'closePopup'
-export const TWO_FACTOR = 'twoFactor'
 
 // wallet
 export const SET_CREATE_MNEMONIC = 'setCreateMnemonic'
@@ -24,6 +24,7 @@ export const SET_CREATE_ADDRESS = 'setCreateAddress'
 export const SET_MNEMONIC = 'setMnemonic'
 export const SET_ADDRESS = 'setAddress'
 export const SET_HD_PATH = 'setHdPath'
+export const SET_HD_PATH_PRETTY = 'setHdPathPretty'
 export const SET_ACCOUNT_DATA = 'setAccountData'
 export const SET_VALIDATORS = 'setValidators'
 export const SET_TOTAL_BONDED = 'setTotalBonded'
