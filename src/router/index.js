@@ -8,7 +8,7 @@ export default new VueRouter({
   base: '/',
   routes: [
     {
-      path: '/',
+      path: '/:chainId?/:environment?',
       name: 'home',
       component: view('Home')
     },

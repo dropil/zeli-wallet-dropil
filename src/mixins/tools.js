@@ -108,7 +108,7 @@ export const tools = {
   },
   updateUrl (url, _this) {
     window.history.pushState(null, null, url)
-    _this.$root.$emit('update-url', url)
+    if (_this) _this.$root.$emit('update-url', url)
   },
   getMoniker(validatorAddress) {
     let validators = store.state.wallet.validators
