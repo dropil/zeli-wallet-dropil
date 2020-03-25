@@ -59,27 +59,28 @@ export default {
     ...mapGetters(['meta'])
   },
   beforeRouteEnter (to, from, next) {    
-    let chainId = to.params.chainId || ''
+    let chainId = to.params.chainId ? to.params.chainId.toLowerCase() : ''
 
     // no chain id specified
     if (!chainId) 
       return next()
 
     // environment defaults to mainnet
-    let environment = ['mainnet', 'testnet', 'development'].includes(to.params.environment.toLowerCase()) ? to.params.environment.toLowerCase() : 'mainnet'
+    let environment = to.params.environment ? to.params.environment.toLowerCase() : 'mainnet'
+    environment = ['mainnet', 'testnet', 'development'].includes(environment) ? environment : 'mainnet'
     
     // if mainnet does not contain chainId, check testnet
-    if (environment === 'mainnet' && !networks[environment].filter(n => n.chainId === chainId).length) environment = 'testnet'
+    if (environment === 'mainnet' && !networks[environment].filter(n => n.chainId.toLowerCase() === chainId).length) environment = 'testnet'
 
     // if testnet does not contain chainId, check development
-    if (environment === 'testnet' && !networks[environment].filter(n => n.chainId === chainId).length) environment = 'development'
+    if (environment === 'testnet' && !networks[environment].filter(n => n.chainId.toLowerCase() === chainId).length) environment = 'development'
 
     // if development does not contain chainId, then do not set meta
-    if (!networks[environment].filter(n => n.chainId === chainId).length) 
+    if (!networks[environment].filter(n => n.chainId.toLowerCase() === chainId).length) 
       return next('/')
 
     // set meta based on route
-    let meta = { ...networks[environment].filter(n => n.chainId === chainId)[0] }
+    let meta = { ...networks[environment].filter(n => n.chainId.toLowerCase() === chainId)[0] }
     store.dispatch(SET_META, meta)
     
     // remove chainId and environment params from URL
