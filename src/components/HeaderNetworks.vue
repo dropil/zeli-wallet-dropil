@@ -102,7 +102,7 @@ export default {
       let meta = { ...networks[environment].filter(n => n.chainId === chainId)[0] }
 
       store.dispatch(SET_META, meta)
-      tools.toastrSuccess('You have switched to the ' + chainId + ' network')
+      tools.toastrSuccess('You have switched to the ' + chainId + ' ' + environment + ' network')
       this.$router.push('/')
     }
   }

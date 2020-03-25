@@ -8,11 +8,6 @@ export default new VueRouter({
   base: '/',
   routes: [
     {
-      path: '/:chainId?/:environment?',
-      name: 'home',
-      component: view('Home')
-    },
-    {
       path: '/create',
       name: 'create',
       component: view('Create')
@@ -26,7 +21,12 @@ export default new VueRouter({
       path: '/faucet',
       name: 'faucet',
       component: view('Faucet')
-    }
+    },
+    {
+      path: '/:chainId?/:environment?',
+      name: 'home',
+      component: view('Home')
+    }    
   ]
 })
 
