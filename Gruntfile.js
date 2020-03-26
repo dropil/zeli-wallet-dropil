@@ -11,16 +11,19 @@ module.exports = function (grunt) {
       options: {
         implementation: sass,
         sourceMap: true,
-        outputStyle: 'nested'
+        outputStyle: 'nested',
+        includePaths: ['node_modules']
       },
       dev: {
         files: {
-          'src/assets/css/main.css': 'src/assets/sass/main.scss',
+          'src/assets/css/light.css': 'src/assets/sass/main.scss',
+          'src/assets/css/dark.css': 'src/assets/sass/themes/dark/main.scss'
         }
       },
       prod: {
         files: {
-          'public/assets/css/main.css': 'src/assets/sass/main.scss'
+          'public/assets/css/light.css': 'src/assets/sass/main.scss',
+          'public/assets/css/dark.css': 'src/assets/sass/themes/dark/main.scss'
         }
       }
     },
@@ -71,6 +74,7 @@ module.exports = function (grunt) {
   ])
 
   grunt.registerTask('live', [
-    'sass:prod'
+    'sass:prod',
+    'cssmin'
   ])
 }

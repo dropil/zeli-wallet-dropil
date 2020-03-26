@@ -14,8 +14,8 @@
     max-height: 97%;
     overflow: hidden;
     overflow-y: auto;
-    background-color: $c-white;
-    border: 1px solid #a8aaad;
+    background-color: $c-popup-bg;
+    border: 1px solid $c-popup-border;
     padding: 25px 40px;
     box-shadow: $shadow-light;
     border-radius: 6px;    
@@ -142,7 +142,7 @@
       padding: .75em 0;
       margin-bottom: .7em;
       background-color: $c-brand;
-      color: #fff;
+      color: $c-well-bg;
       border-radius: 6px;
       font-weight: 600;
       text-transform: uppercase;

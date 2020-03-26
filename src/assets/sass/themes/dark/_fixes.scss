@@ -1,0 +1,8 @@
+.popup.vote .options .option {
+  color: $c-white;
+}
+
+footer.footer .container .left .logo-copy {
+  @include img($svg-symbol-white-copy, contain, 8px center);
+  background-size: 23px;
+}

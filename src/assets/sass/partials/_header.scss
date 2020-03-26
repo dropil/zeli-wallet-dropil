@@ -125,7 +125,7 @@ header {
       max-height: 0;
       overflow: hidden;
       transition: .3s ease all;
-      background-color: $c-white; 
+      background-color: $c-well-bg;
       white-space: nowrap;   
       text-align: left;
       box-shadow: $shadow-light;
@@ -227,6 +227,18 @@ header {
         &.active {
           color: $c-white;
         }
+
+        i {
+          font-size: .9em;
+          margin-left: 3px;
+        }
+
+        &.theme {
+          i {
+            font-size: 16px;
+            vertical-align: middle;
+          }
+        }        
       }
     }
   }
@@ -290,7 +302,7 @@ header {
         }
 
         &:hover {
-          background-color: $c-white;
+          background-color: $c-well-bg;
         }
       }
     }

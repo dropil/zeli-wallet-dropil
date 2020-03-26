@@ -6,6 +6,23 @@ Official Dropil Chain Wallet - Access supported Cosmos-SDK based chains to sign/
 
 If you have questions or concerns about the wallet or you want to discuss being added as a supported network, get in touch with [@jmcalpine](https://t.me/jmcalpine) on Telegram
 
+## Ongoing Development & Pull Requests
+
+This is an ongoing project, development and new releases will be regular. Pull requests are highly welcomed for bug fixes or general feature additions.
+
+### Running on Your Machine
+
+In order to get started with a dev environment for this repo, follow the following steps:
+
+1. Fork repository and open in editor of choice (Visual Studio Code is excellent)
+2. Open terminal and run `npm install`
+3. In the terminal run `grunt live`. The purpose of this is to generate the static CSS files used for switching between themes and for minified css files on production. Note: grunt is required to be installed in order to run `grunt` commands to generate the static css files
+4. In the terminal run `npm run serve`
+5. Navigate to `localhost:8080` or whatever URL your editor outputs
+6. You are now in the dev environment!
+
+Once you have made changes and have committed to your forked repo, go ahead and create a Pull Request and Dropil will review.
+
 ## Current Supported Networks
 
 ### Mainnet Networks

@@ -11,9 +11,10 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/create">Create a Wallet</router-link></li>
         <li><router-link to="/access">Access Wallet</router-link></li>
-        <li><router-link v-if="meta.coin==='Dropil' && meta.environment==='Testnet'" to="/faucet">Faucet</router-link></li>
+        <li v-if="meta.coin==='Dropil' && meta.environment==='Testnet'"><router-link to="/faucet">Faucet</router-link></li>
         <li><a :href="meta.docsUrl">Docs <i class="far fa-external-link"></i></a></li>
         <li><a :href="meta.websiteUrl">Website <i class="far fa-external-link"></i></a></li>
+        <li><a class="theme" @click="switchTheme()"><i v-tooltip="'Toggle light/dark theme'" class="fas" :class="themeClass"></i></a></li>
       </ul>
 
       <div class="submenu">
@@ -24,6 +25,7 @@
           <router-link v-if="meta.coin==='Dropil' && meta.environment==='Testnet'" to="/faucet">Faucet</router-link>
           <a :href="meta.docsUrl">Docs</a>
           <a :href="meta.websiteUrl">Website</a>
+          <a class="theme" @click="switchTheme()"><i v-tooltip="'Toggle light/dark theme'" class="fas" :class="themeClass"></i> Toggle Theme</a>
         </div>
       </div>
     </div>
@@ -33,19 +35,30 @@
 <script>
 import { mapGetters } from 'vuex'
 import HeaderNetworks from './HeaderNetworks'
+import tools from '../mixins/tools'
 
 export default {
   name: 'Header',
   components: { HeaderNetworks },
   computed: {
-    ...mapGetters(['meta'])
-  }  
+    ...mapGetters(['meta'])    
+  },
+  data() {
+    return {
+      themeClass: ''
+    }
+  },
+  mounted() {
+    this.getThemeClass()
+  },
+  methods: {
+    switchTheme() {
+      tools.toggleTheme(this)
+      this.getThemeClass()
+    },
+    getThemeClass() {
+      this.themeClass = tools.getTheme() === 'light' ? 'fa-sun': 'fa-moon'
+    }
+  }
 }
 </script>
-
-<style scoped lang="scss">
-  a i {
-    font-size: .9em;
-    margin-left: 3px;
-  }
-</style>

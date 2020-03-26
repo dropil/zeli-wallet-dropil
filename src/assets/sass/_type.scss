@@ -77,7 +77,7 @@ h6 {
   font-family: $font-family-alt;
   padding: 0;
   line-height: 1.5rem;
-  color: #203d8c;
+  color: $c-brand;
 }
 
 h1 {
@@ -132,7 +132,7 @@ h6 {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #eef1f4;
+  background-color: $c-alt-bg;
 }
 
 // Tables
@@ -195,11 +195,11 @@ input {
 
     &.address {      
       padding: .5em 1em;
-      background-color: #eef2f7;
-      color: #222b3d;
+      background-color: $c-bg;
+      color: $c-black;
       font-weight: 600;
       border-radius: 6px;
-      border: 1px solid #C9D5E7;            
+      border: 1px solid $c-border;
     }
   }
 
@@ -314,15 +314,15 @@ input {
 
 input,
 textarea {
-  color: #222b3d;
+  color: $c-black;
   font-family: $font-family-base;
 }
 
 textarea {
-  border: 1px solid #C9D5E7;
+  border: 1px solid $c-border;
   padding: .5em;
   border-radius: 6px;
-  background-color: #f4f8fd;  
+  background-color: $c-well-bg;
   width: 100%;
 }
 
@@ -364,11 +364,11 @@ textarea {
     bottom: 0;
     width: 100%;
     padding: 0 2em 0 1em;
-    background-color: transparent;
+    background-color: $c-bg;
     border: 0 none;
-    color: #222b3d;
+    color: $c-black;
     line-height: 1.5em;
-    border: 1px solid $c-grey-font;
+    border: 1px solid $c-border;
     cursor: pointer;
     border-radius: 6px;    
     font-weight: 600;

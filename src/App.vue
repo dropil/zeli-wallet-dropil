@@ -31,11 +31,22 @@ export default {
     includeHeader() {
       return this.pageClass !== "no-header";
     }
+  },
+  beforeCreate() {
+    if (process.env.NODE_ENV === 'development') tools.setTheme('dark')
+
+    switch (tools.getTheme()) {
+      case 'light':
+        if (process.env.NODE_ENV === 'development') require('./assets/sass/main.scss')
+        else document.getElementById('dark-theme').remove()
+
+        break
+      case 'dark':
+        if (process.env.NODE_ENV === 'development') require('./assets/sass/themes/dark/main.scss')
+        else document.getElementById('light-theme').remove()
+
+        break
+    }  
   }
 };
-
-if (process.env.NODE_ENV === "development") {
-  require("./assets/sass/main.scss");
-  document.head.removeChild(document.getElementById('main-style'))
-}
 </script>

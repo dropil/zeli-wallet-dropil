@@ -362,8 +362,8 @@ a.add {
 }
 
 .checkbox {
-  $checked-color: #203d8c;
-  $unchecked-color: #203d8c;
+  $checked-color: $c-brand;
+  $unchecked-color: $c-brand;
   $checkbox-height: 14px;
   $font-color: inherit;
   $duration: 0.4s;
@@ -539,7 +539,7 @@ a.add {
 
   label {
     font-size: 0.8em;
-    color: #222b3d;
+    color: $c-black;
     font-weight: 600;
     cursor: default;
   }
@@ -603,7 +603,7 @@ a.add {
   z-index: 10000;
 
   .tooltip-inner {
-    background: #203d8c;
+    background: $c-brand;
     color: white;
     border-radius: 6px;
     padding: 7px 15px 7px;
@@ -617,7 +617,7 @@ a.add {
     border-style: solid;
     position: absolute;
     margin: 5px;
-    border-color: #203d8c;
+    border-color: $c-brand;
     z-index: 1;
   }
 
@@ -746,7 +746,7 @@ a.add {
   .box {
     display: inline-block;
     padding: 5px 10px;
-    background-color: #eef2f7;
+    background-color: $c-bg;
     border: 1px solid $c-border;
     border-radius: 6px;
     margin-top: 8px;
@@ -782,19 +782,19 @@ a.add {
 }
 
 .file-upload {
-  outline: 2px dashed $c-grey-font;
+  outline: 2px dashed $c-border;
   outline-offset: -10px;
-  background: #e8f0ff;
+  background: $c-file-upload-bg;
   min-height: 200px;
   position: relative;
   cursor: pointer;
 
   &:hover {
-    background: #ccd9f3;
+    background: rgba($c-file-upload-bg, 0.8);
   }
 
   &.drag-hover {
-    background: #ccd9f3;
+    background: rgba($c-file-upload-bg, 0.8);
     outline-style: solid;
 
     p {
@@ -855,7 +855,7 @@ a.add {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #fff;
+    background-color: $c-well-bg;
     border: 1px solid $c-border;
   }
 }
@@ -872,7 +872,7 @@ a.add {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $c-white;
+  background-color: $c-well-bg;
   z-index: 99; 
   border-radius: 0 0 6px 6px;
   
@@ -883,7 +883,7 @@ a.add {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: #203d8c;
+    color: $c-brand;
 
     .fa-spinner {
       font-size: 4em;

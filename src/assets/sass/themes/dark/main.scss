@@ -12,28 +12,31 @@ $fa-font-path: "/assets/fonts/fa";
 // Fonts
 // =======================
 
-@import "fonts";
+@import "../../fonts";
 
 // Theme Configuration
 // =======================
 
-@import "svg-datauris";
+@import "../../svg-datauris";
+@import "../../variables";
 @import "variables";
-@import "type";
-@import "mixins";
+@import "../../type";
+@import "../../mixins";
 
 
 // Partials
 // =======================
 
-@import "partials/components";
-@import "partials/header";
-@import "partials/footer";
-@import "partials/popups";
+@import "../../partials/components";
+@import "../../partials/header";
+@import "../../partials/footer";
+@import "../../partials/popups";
 
 
 // Pages
 // =======================
 
-@import "pages/dash";
-@import "pages/layout";
+@import "../../pages/dash";
+@import "../../pages/layout";
+
+@import "fixes";

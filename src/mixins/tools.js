@@ -382,6 +382,83 @@ export const tools = {
         store.dispatch(SET_COIN_PRICE, data.market_data.current_price.usd)
       })
     }
+  },
+  getTheme () {
+    if (!tools.localStorage.get('theme')) tools.setTheme('light')
+    return tools.localStorage.get('theme') || 'light'
+  },
+  setTheme (theme) {
+    tools.localStorage.set('theme', theme)
+  },
+  addCss (fileName, id) {    
+    var head = document.head
+    var link = document.createElement('link')
+
+    link.type = 'text/css'
+    link.rel = 'stylesheet'
+    link.href = fileName
+    link.id = id
+
+    head.appendChild(link)
+    
+  },
+  toggleTheme (t) {
+    switch (tools.getTheme()) {
+      case 'light':
+        if (document.getElementById('dark-theme') && document.getElementById('light-theme')) {
+          // remove light theme because dark theme already exists
+          // this is most likely due to clicking toggle multiple times
+          document.getElementById('light-theme').remove()
+        } 
+        else if (!document.getElementById('dark-theme') && document.getElementById('light-theme')) {
+          // add dark theme to override light theme
+          tools.addCss('/assets/css/dark.min.css', 'dark-theme')
+
+          // remove light theme after transition is complete
+          setTimeout(() => {
+            // only remove light theme if the theme is still set to dark in cookies
+            if (tools.getTheme() === 'dark') 
+              document.getElementById('light-theme').remove()
+          }, 1000)
+        }
+        else if (!document.getElementById('dark-theme') && !document.getElementById('light-theme')) {
+          // add dark theme because no theme exists
+          tools.addCss('/assets/css/dark.min.css', 'dark-theme')
+        }
+        
+        // set current theme to dark in cookies
+        tools.setTheme('dark')          
+
+        break
+      case 'dark':
+        if (document.getElementById('light-theme') && document.getElementById('dark-theme')) {
+          // remove dark theme because light theme already exists
+          // this is most likely due to clicking toggle multiple times
+          document.getElementById('dark-theme').remove()
+        } 
+        else if (!document.getElementById('light-theme') && document.getElementById('dark-theme')) {
+          // add light theme to override dark theme
+          tools.addCss('/assets/css/light.min.css', 'light-theme')
+
+          // remove dark theme after transition is complete
+          setTimeout(() => {
+            // only remove dark theme if the theme is still set to light in cookies
+            if (tools.getTheme() === 'light') 
+              document.getElementById('dark-theme').remove()
+          }, 1000)
+        }
+        else if (!document.getElementById('light-theme') && !document.getElementById('dark-theme')) {
+          // add light theme because no theme exists
+          tools.addCss('/assets/css/light.min.css', 'light-theme')
+        }
+        
+        // set current theme to light in cookies
+        tools.setTheme('light')
+        
+        break
+    }
+
+    t.$root.$emit('switchTheme')
   }
 }
 

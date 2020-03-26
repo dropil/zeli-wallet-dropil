@@ -147,7 +147,6 @@ export default {
 
       tools.wallet.access(mnemonic, address)
 
-      if (!this.save) tools.toastrSuccess('Successfully connected to wallet')
       this.$emit('load')
     }
   },

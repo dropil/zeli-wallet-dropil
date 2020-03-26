@@ -133,7 +133,6 @@ export default {
 
       tools.wallet.access(mnemonic, address)
 
-      tools.toastrSuccess('Successfully connected to wallet')
       this.$emit('load')      
     }
   }
