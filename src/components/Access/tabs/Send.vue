@@ -1,6 +1,6 @@
 <template>
   <div class="tab-content send">
-    <Loading v-if="send.loading" />    
+    <Loading v-if="send.loading" />
 
     <div class="section" v-if="send.start">
       <h3>Send {{meta.tickerPlural}}</h3>

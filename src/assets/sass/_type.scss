@@ -24,7 +24,6 @@ body {
 // Copy & Lists
 p {
   line-height: 1.5rem;
-  padding-top: 0.25rem;
   padding-bottom: 0;
 }
 
@@ -320,12 +319,11 @@ textarea {
 }
 
 textarea {
-  background-color: transparent;
-  border: 0 none;
-  border-radius: 0;
-  border-bottom: 1px solid $c-border;
+  border: 1px solid #C9D5E7;
+  padding: .5em;
+  border-radius: 6px;
+  background-color: #f4f8fd;  
   width: 100%;
-  padding: 0.5em 0;
 }
 
 input,

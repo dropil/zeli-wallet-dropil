@@ -9,6 +9,8 @@
       @close-popup="childClosePopup"
     >
       <HdPath v-if="showPopup === 'hd-path'" />      
+      <NewProposal v-if="showPopup === 'new-proposal'" />      
+      <Vote v-if="showPopup === 'vote'" />      
     </div>
   </transition>
 </template>
@@ -19,11 +21,13 @@ import { mapGetters } from 'vuex'
 import { SET_PREVENT_SHOW_POPUP, CLOSE_POPUP } from '../store/actions.type'
 
 import HdPath from '../components/Popups/HdPath'
+import NewProposal from '../components/Popups/NewProposal'
+import Vote from '../components/Popups/Vote'
 
 export default {
   name: 'Popups',
   components: {
-    HdPath
+    HdPath, NewProposal, Vote
   },
   computed: {
     ...mapGetters(['showPopup', 'preventShowPopup'])

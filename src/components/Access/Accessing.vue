@@ -34,6 +34,15 @@
 
         <a
           class="tab"
+          :class="[{active:tab==='proposals'},{'mobile-show':showMobileMenu}]"
+          @click="tab='proposals';showMobileMenu=!showMobileMenu"
+        >
+          Proposals
+          <div @click.stop="showMobileMenu=!showMobileMenu" class="mobile-menu"></div>
+        </a>
+
+        <a
+          class="tab"
           :class="[{'mobile-show':showMobileMenu}]"
           target="_blank"
           :href="meta.explorerUrl + `/account/${address}`"
@@ -45,8 +54,9 @@
 
       <transition name="animation-fade-fast" mode="out-in">
         <Wallet v-if="tab==='wallet'" key="wallet" @switchTab="switchTab" />        
-        <Send v-if="tab==='send'" key="send" @switchTab="switchTab" @reset="reset" />
+        <Send v-if="tab==='send'" key="send" @switchTab="switchTab" @reset="reset" />        
         <Delegation v-if="tab==='delegation'" key="delegation" @switchTab="switchTab" @reset="reset" />
+        <Proposals v-if="tab==='proposals'" key="proposals" @switchTab="switchTab" @reset="reset" />
       </transition>
     </div>
 
@@ -54,6 +64,7 @@
       <a class="btn" v-if="tab!=='wallet'" @click="tab='wallet'">View Wallet</a>
       <a class="btn" v-if="tab!=='send'" @click="tab='send'">Send {{meta.tickerPlural}}</a>
       <a class="btn" v-if="tab!=='delegation'" @click="tab='delegation'">Delegation</a>
+      <a class="btn" v-if="tab!=='proposals'" @click="tab='proposals'">Proposals</a>
     </div>
 
     <div class="buttons disconnect">
@@ -66,6 +77,7 @@
 import Wallet from './tabs/Wallet'
 import Send from './tabs/Send'
 import Delegation from './tabs/Delegation'
+import Proposals from './tabs/Proposals'
 import VerifyDomain from '../VerifyDomain'
 import tools from "../../mixins/tools";
 import store from "../../store";
@@ -74,7 +86,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: 'Accessing',
-  components: { Wallet, Send, Delegation, VerifyDomain },
+  components: { Wallet, Send, Delegation, Proposals, VerifyDomain },
   data() {
     return {
       tab: "wallet",

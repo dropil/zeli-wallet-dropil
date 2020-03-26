@@ -1,11 +1,11 @@
 import {
   SET_CREATE_MNEMONIC, SET_CREATE_ADDRESS, SET_MNEMONIC, SET_ADDRESS, SET_HD_PATH, SET_HD_PATH_PRETTY, SET_VALIDATORS, SET_TOTAL_BONDED, SET_BALANCE, SET_ACCOUNT_DATA, RESET_BALANCES, SET_DELEGATIONS, SET_REWARDS, SET_UNBONDING, SET_TAB_STATE, RESET_TAB_STATE,
-  SET_LOAD_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE, SET_META, SET_META_VALUE
+  SET_LOAD_INTERVAL_ID, SET_BALANCES_UPDATED, RESET_ALL_ACCESS, SET_COIN_PRICE, SET_META, SET_META_VALUE, SET_VOTE_PROPOSAL
 } from './actions.type'
 
 import {
   COMMIT_CREATE_MNEMONIC, COMMIT_CREATE_ADDRESS, COMMIT_MNEMONIC, COMMIT_ADDRESS, COMMIT_HD_PATH, COMMIT_HD_PATH_PRETTY, COMMIT_VALIDATORS, COMMIT_TOTAL_BONDED, COMMIT_BALANCE, COMMIT_BALANCES_UPDATED_SECONDS, COMMIT_ACCOUNT_DATA, COMMIT_RESET_BALANCES, COMMIT_DELEGATIONS, COMMIT_REWARDS, COMMIT_UNBONDING, COMMIT_TAB_STATE, COMMIT_RESET_TAB_STATE,
-  COMMIT_LOAD_INTERVAL_ID, COMMIT_BALANCES_UPDATED, COMMIT_COIN_PRICE
+  COMMIT_LOAD_INTERVAL_ID, COMMIT_BALANCES_UPDATED, COMMIT_COIN_PRICE, COMMIT_VOTE_PROPOSAL
 } from './mutations.type'
 
 import networks from '../config/networks'
@@ -58,7 +58,10 @@ const state = {
   redelegate: { ...BASE_TAB_FIELDS, validatorSourceAddress: '', validatorDestAddress: '' },
   withdrawRewards: { ...BASE_TAB_FIELDS, withdrawRewards: '' },
   modifyWithdrawAddress: { ...BASE_TAB_FIELDS },
-  coinPrice: 0
+  submitProposal: { ...BASE_TAB_FIELDS, title: '', description: '' },
+  vote: { ...BASE_TAB_FIELDS, option: '', proposal_id: '' },
+  coinPrice: 0,
+  voteProposal: {}
 }
 
 const getters = {
@@ -128,8 +131,17 @@ const getters = {
   modifyWithdrawAddress (state) {
     return state.modifyWithdrawAddress
   },
+  submitProposal (state) {
+    return state.submitProposal
+  },
+  vote (state) {
+    return state.vote
+  },
   coinPrice (state) {
     return state.coinPrice
+  },
+  voteProposal (state) {
+    return state.voteProposal
   }
 }
 
@@ -196,6 +208,8 @@ const actions = {
     
     if (type === 'modifyWithdrawAddress') newObj.withdrawAddress = state.modifyWithdrawAddress.withdrawAddress
     if (type === 'redelegate') newObj = { ...newObj, validatorSourceAddress: '', validatorDestAddress: '' }
+    if (type === 'submitProposal') newObj = { ...newObj, title: '', description: '' }
+    if (type === 'vote') newObj = { ...newObj, option: '', proposal_id: '' }
 
     commit(COMMIT_RESET_TAB_STATE, { type, newObj })
   },
@@ -222,9 +236,14 @@ const actions = {
     dispatch(RESET_TAB_STATE, 'redelegate')
     dispatch(RESET_TAB_STATE, 'withdrawRewards')
     dispatch(RESET_TAB_STATE, 'modifyWithdrawAddress')
+    dispatch(RESET_TAB_STATE, 'submitProposal')
+    dispatch(RESET_TAB_STATE, 'vote')
   },
   [SET_COIN_PRICE] ({ commit }, coinPrice) {
     commit(COMMIT_COIN_PRICE, coinPrice)
+  },
+  [SET_VOTE_PROPOSAL] ({ commit }, proposal) {
+    commit(COMMIT_VOTE_PROPOSAL, proposal)
   }
 }
 
@@ -291,7 +310,10 @@ const mutations = {
   },
   [COMMIT_COIN_PRICE] (state, coinPrice) {        
     state.coinPrice = coinPrice
-  }  
+  },
+  [COMMIT_VOTE_PROPOSAL] (state, proposal) {
+    state.voteProposal = proposal
+  }
 }
 
 export default {

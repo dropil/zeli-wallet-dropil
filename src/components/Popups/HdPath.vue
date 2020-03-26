@@ -10,6 +10,10 @@
       </p>
 
       <p>
+        <b class="danger">This is an advanced feature, most users can safely ignore this feature.</b>
+      </p>
+
+      <p>
         A great article has been written by the MyEtherWallet team on Medium explaining HD paths in depth.
         <a href="https://medium.com/myetherwallet/hd-wallets-and-derivation-paths-explained-865a643c7bf2" target="_blank">Click here</a> 
         to read the article if interested.

@@ -71,7 +71,7 @@ export default {
       hdPathPretty: '44/495/0/0/0',
       mnemonicLengths: '24',
       baseFee: 10000, //denom (udrop)
-      baseFeeCoin: 1, //coin (DROP)
+      baseFeeCoin: 0.01, //coin (DROP)
       baseGas: 200000,
       powerReduction: 1000000,
       decimals: 6

@@ -184,10 +184,33 @@ export const tools = {
         params.gas = meta.baseGas * 1.5
 
         break
+      case 'submitProposal':
+        let submitProposal = store.state.wallet.submitProposal
+
+        if (!submitProposal.title)
+          return tools.toastrError('Enter a title for the proposal')
+        else if (!submitProposal.description)
+          return tools.toastrError('Enter a description for the proposal')        
+
+        params.title = submitProposal.title
+        params.description = submitProposal.description
+        params.amount = submitProposal.amount
+
+        break
+      case 'vote':
+        let vote = store.state.wallet.vote
+
+        if (!['Yes', 'No', 'NoWithVeto', 'Abstain'].includes(vote.option))
+          return tools.toastrError('Invalid vote option')
+
+        params.proposal_id = vote.proposal_id
+        params.option = vote.option
+
+        break
     }
     
     // amount validation
-    if (['send', 'delegate', 'undelegate', 'redelegate'].includes(type)) {
+    if (['send', 'delegate', 'undelegate', 'redelegate', 'submitProposal'].includes(type)) {
       if (store.state.wallet[type].amount === '' || parseFloat(store.state.wallet[type].amount) === 0)
         return tools.toastrError("Please enter an amount");
       else if (parseFloat(store.state.wallet[type].amount) % 1 !== 0 && store.state.wallet[type].amount.toString().split(".")[1].length > 6)
@@ -263,6 +286,11 @@ export const tools = {
 
     return mnemonic
   },
+  async fetch(url) {
+    let response = await fetch(url);
+    let data = await response.json();
+    return data;
+  },
   wallet: {
     access(mnemonic, address) {      
       store.dispatch(RESET_ALL_ACCESS)
@@ -286,7 +314,7 @@ export const tools = {
     loadBalances(firstLoad = false) {
       if (firstLoad) store.dispatch(RESET_BALANCES)      
 
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/auth/accounts/${store.state.wallet.address}`).then(data => {        
+      tools.fetch(store.state.general.meta.apiUrl + `/auth/accounts/${store.state.wallet.address}`).then(data => {        
         if (!data.result || !data.result.value.coins.length || !data.result.value.coins.filter(c => c.denom.toLowerCase() === store.state.general.meta.denom))
           return store.dispatch(SET_BALANCE, { type: 'available', value: 0 });
 
@@ -297,7 +325,7 @@ export const tools = {
         store.dispatch(SET_ACCOUNT_DATA, { type: 'sequence', value: data.result.value.sequence })
       })
 
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/distribution/delegators/${store.state.wallet.address}/rewards`).then(
+      tools.fetch(store.state.general.meta.apiUrl + `/distribution/delegators/${store.state.wallet.address}/rewards`).then(
         data => {
           if (!data.result || !data.result.total.length || !data.result.total.filter(c => c.denom.toLowerCase() === store.state.general.meta.denom))
             return store.dispatch(SET_BALANCE, { type: 'rewards', value: 0 });
@@ -309,7 +337,7 @@ export const tools = {
         }
       )
 
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/delegators/${store.state.wallet.address}/delegations`).then(
+      tools.fetch(store.state.general.meta.apiUrl + `/staking/delegators/${store.state.wallet.address}/delegations`).then(
         data => {
           if (!data.result || !data.result.length)
             return store.dispatch(SET_BALANCE, { type: 'delegated', value: 0 });
@@ -321,7 +349,7 @@ export const tools = {
         }
       )
 
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/delegators/${store.state.wallet.address}/unbonding_delegations`).then(data => {
+      tools.fetch(store.state.general.meta.apiUrl + `/staking/delegators/${store.state.wallet.address}/unbonding_delegations`).then(data => {
         if (!data.result || !data.result.length) 
           return store.dispatch(SET_BALANCE, { type: 'unbonding', value: 0 });
         
@@ -334,28 +362,23 @@ export const tools = {
       })
 
       store.dispatch(SET_BALANCES_UPDATED, Date.now())
-    },
-    async fetch(url) {
-      let response = await fetch(url);
-      let data = await response.json();
-      return data;
-    },
+    },    
     loadWithdrawAddress() {
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/distribution/delegators/${store.state.wallet.address}/withdraw_address`).then(data => {
+      tools.fetch(store.state.general.meta.apiUrl + `/distribution/delegators/${store.state.wallet.address}/withdraw_address`).then(data => {
         store.dispatch(SET_TAB_STATE, { type: 'modifyWithdrawAddress', key: 'withdrawAddress', value: data.result })
       })
     },
     loadValidators() {
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/validators`).then(data => {
+      tools.fetch(store.state.general.meta.apiUrl + `/staking/validators`).then(data => {
         store.dispatch(SET_VALIDATORS, data.result.sort((a, b) => parseFloat(b.tokens) - parseFloat(a.tokens)))
       })
 
-      tools.wallet.fetch(store.state.general.meta.apiUrl + `/staking/pool`).then(data => {
+      tools.fetch(store.state.general.meta.apiUrl + `/staking/pool`).then(data => {
         store.dispatch(SET_TOTAL_BONDED, data.result.bonded_tokens)
       })
     },
     loadCoinPrice() {
-      tools.wallet.fetch('https://api.coingecko.com/api/v3/coins/' + store.state.general.meta.coinGeckoId).then(data => {
+      tools.fetch('https://api.coingecko.com/api/v3/coins/' + store.state.general.meta.coinGeckoId).then(data => {
         store.dispatch(SET_COIN_PRICE, data.market_data.current_price.usd)
       })
     }

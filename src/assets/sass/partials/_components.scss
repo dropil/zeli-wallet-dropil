@@ -117,9 +117,18 @@
     }
   }
 
+  &.grey {
+    background-color: $c-light-grey;
+    color: $c-white;
+
+    &:after {
+      background-color: rgba($c-light-grey, 0.25);
+    }
+  }
+
   &.b {
-    color: $c-blue;
-    border: 1px solid $c-blue;
+    background-color: $c-blue;
+    color: $c-white;
 
     &:after {
       background-color: rgba($c-blue, 0.25);
@@ -147,6 +156,12 @@
     &:after {
       background-color: rgba($c-red, 0.25);
     }
+  }
+
+  &.disabled {
+    background-color: $c-light-grey;
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 }
 
@@ -534,6 +549,10 @@ a.add {
     margin-bottom: 0;
   }
 
+  textarea {
+    margin-top: .5em;
+  }
+
   .input-show {
     position: absolute;
     right: 0.5em;
@@ -815,5 +834,64 @@ a.add {
 
   &.danger {
     background-color: $c-red;
+  }
+}
+
+.signed-tx, .broadcasted-tx {
+  background-color: #f5faff;
+  padding: 1em;
+  border-radius: 6px;
+  border: 1px solid $c-border;
+  overflow: hidden;
+  overflow-x: scroll;
+  word-break: keep-all;
+  white-space: nowrap;
+  margin: .5em 0 2em;
+  text-align: left;
+  color: $c-black;
+
+  &::-webkit-scrollbar-track {
+    background-color: #f5faff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border: 1px solid $c-border;
+  }
+}
+
+.broadcasted-tx {
+  word-break: break-word;
+  white-space: pre;
+}
+
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $c-white;
+  z-index: 99; 
+  border-radius: 0 0 6px 6px;
+  
+  .centered {
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #203d8c;
+
+    .fa-spinner {
+      font-size: 4em;
+    }
+
+    p {
+      margin-top: .5em;
+      font-size: 2em;
+    }
   }
 }
