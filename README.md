@@ -60,13 +60,23 @@ All of the information above is automatically updated every 60 seconds or can be
 
 The wallet also allows users to sign the following transaction types and then optionally save the signed tx JSON or broadcast the signed tx to a supported public API:
 
-* Send Atoms (or whichever coin for the network they are accessing)
-* Delegate Atoms
-* Undelegate Atoms
+* Send Drops (or whichever coin for the network they are accessing)
+* Delegate Drops
+* Undelegate Drops
 * Transfer Delegation (redelegate)
 * Withdraw unclaimed rewards
 * Update withdraw rewards address
+* Submit new governance proposals
+* Vote on active governance proposals
+
+### Governance Proposals
+
+View active and past governance proposals within the wallet. Each proposal shows the title, description, relevant dates, and tallies of votes.
+
+#### Voting
+
+Users with a delegated balance may vote on proposals that are currently in open voting status. Available voting options are "Yes", "No", "NoWithVeto", and "Abstain".
 
 ### Validator List
 
-The wallet displays a list of the validators and some of the information about them to help users choose a validator to delegate their Atoms to. Users may easily delegate to a validator of their choosing by clicking the "delegate" button within the validator list.
+The wallet displays a list of the validators and some of the information about them to help users choose a validator to delegate their Drops to. Users may easily delegate to a validator of their choosing by clicking the "delegate" button within the validator list.
