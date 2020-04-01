@@ -1,10 +1,10 @@
-# Dropil Chain Wallet
+# Zeli Wallet - Powered by Dropil
 
-Official Dropil Chain Wallet - Access supported Cosmos-SDK based chains to sign/broadcast transfer and delegation transactions
+Zeli Wallet - Access Dropil Chain and other supported Cosmos-SDK based chain wallets
 
 ## Get in Touch
 
-If you have questions or concerns about the wallet or you want to discuss being added as a supported network, get in touch with [@jmcalpine](https://t.me/jmcalpine) on Telegram
+If you have questions or concerns about Zeli or you want to discuss being added as a supported network, get in touch with [@jmcalpine](https://t.me/jmcalpine) on Telegram or by email at jeremy@dropil.com.
 
 ## Ongoing Development & Pull Requests
 
@@ -39,7 +39,7 @@ Once you have made changes and have committed to your forked repo, go ahead and 
 
 ## About the Wallet
 
-The wallet allows users to access their wallet via mnemonic phrase, a saved keystore (generated within the wallet), or a wallet previously saved in their browser. Ledger support will be added soon.
+Zeli allows users to access their wallet via mnemonic phrase, a saved keystore (generated within the wallet), or a wallet previously saved in their browser. Ledger support will be added soon.
 
 All actions taken by a user are on the client side and user's mnemonics or any method of accessing a wallet is not transmitted to any party including Dropil.
 
@@ -58,11 +58,11 @@ All of the information above is automatically updated every 60 seconds or can be
 
 ### Supported Transactions
 
-The wallet also allows users to sign the following transaction types and then optionally save the signed tx JSON or broadcast the signed tx to a supported public API:
+Zeli supports signing the following transaction types offline to produce signed transaction JSON and then may optionally broadcast the signed tx to a supported public API:
 
-* Send Drops (or whichever coin for the network they are accessing)
-* Delegate Drops
-* Undelegate Drops
+* Send Coins
+* Delegate Coins
+* Undelegate Coins
 * Transfer Delegation (redelegate)
 * Withdraw unclaimed rewards
 * Update withdraw rewards address
@@ -71,7 +71,7 @@ The wallet also allows users to sign the following transaction types and then op
 
 ### Governance Proposals
 
-View active and past governance proposals within the wallet. Each proposal shows the title, description, relevant dates, and tallies of votes.
+View active and past governance proposals within Zeli. Each proposal shows the title, description, relevant dates, and tallies of votes.
 
 #### Voting
 
@@ -79,4 +79,4 @@ Users with a delegated balance may vote on proposals that are currently in open 
 
 ### Validator List
 
-The wallet displays a list of the validators and some of the information about them to help users choose a validator to delegate their Drops to. Users may easily delegate to a validator of their choosing by clicking the "delegate" button within the validator list.
+When accessing a wallet in Zeli, visit the Delegation -> Validators tab to view a list of active validators and some of the information about them to help select a validator to delegate to. Users may easily delegate to a validator of their choosing by clicking the "delegate" button within the validator list.

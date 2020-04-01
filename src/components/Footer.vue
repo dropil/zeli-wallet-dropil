@@ -8,10 +8,10 @@
       <div class="right">
         <ul class="nav">
           <li>
-            <a href="https://dropilchain.com">Website</a>
+            <a href="https://dropilchain.com">Dropil Chain</a>
           </li>          
           <li>
-            <a href="https://github.com/dropil/dropil-chain-app">Github</i></a>
+            <a href="https://github.com/dropil/zeli-wallet-dropil">Github</a>
           </li>
           <li>
             <a href="https://home.dropil.com/support">Support</a>
