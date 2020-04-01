@@ -47,6 +47,11 @@ export default {
 
         break
     }  
+
+    if (process.env.NODE_ENV === 'development') {
+      document.getElementById('dark-theme').remove()
+      document.getElementById('light-theme').remove()
+    }
   }
 };
 </script>

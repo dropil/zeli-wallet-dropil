@@ -20,6 +20,20 @@
     box-shadow: $shadow-light;
     border-radius: 6px;    
 
+    a.close {
+      color: $c-red;
+      font-size: 28px;
+      position: absolute;
+      top: 15px;
+      right: 25px;
+
+      &:after {
+        @include fa-icon;
+        @extend .far;
+        content: fa-content($fa-var-times);        
+      }            
+    }
+
     h2 {
       text-align: center;
       font-weight: 600;
@@ -35,6 +49,10 @@
 
     .complete {
       margin-top: 1em;
+    }
+
+    .signed-tx, .broadcasted-tx {
+      background-color: $c-bg;
     }
   }
 }
@@ -125,6 +143,11 @@
 
 .popup.vote {
   width: 450px;  
+
+  .notice {
+    margin-top: -0.75em;
+    margin-bottom: 1em;
+  }
 
   .title {
     font-family: Lato;

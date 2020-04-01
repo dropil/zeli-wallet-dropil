@@ -1,11 +1,16 @@
 <template>
   <div class="popup vote" :class="{wide: vote.signedTx || vote.broadcasted}">
+    <a @click="$emit('close-popup')" class="close"></a>
     <h2>Vote on Proposal</h2>
 
     <div class="wrapper">      
-      <Loading v-if="vote.loading" />
+      <Loading v-if="vote.loading" />      
 
       <div class="section" v-if="vote.start">
+        <div class="notice danger" v-if="existingVote">
+          Warning! You have already voted '{{existingVote}}' on this proposal.
+        </div>
+
         <div class="title">{{this.voteProposal.title}}</div>
         <p>
           Vote on this proposal by selecting one of the options below. Delegators that do not vote on a proposal 
@@ -46,7 +51,20 @@ export default {
   name: 'Vote',  
   components: { Loading, SignedTx, BroadcastedTx },
   computed: {
-    ...mapGetters(['meta', 'vote', 'voteProposal'])
+    ...mapGetters(['meta', 'vote', 'voteProposal', 'address']),
+    proposal_id() {
+      return this.voteProposal.id
+    }
+  },
+  data() {
+    return {
+      existingVote: ''
+    }
+  },
+  beforeMount() {
+    tools.fetch(`${this.meta.apiUrl}/gov/proposals/${this.proposal_id}/votes/${this.address}`)
+    .then(data => this.existingVote = data.result.option)
+    .catch(() => this.existingVote = '')
   },
   methods: {
     castVote(option) {

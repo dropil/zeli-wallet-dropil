@@ -28,7 +28,7 @@ Vue.use(VueIziToast)
 
 // store
 import store from './store'
-import { SHOW_POPUP, CLOSE_POPUP } from './store/actions.type'
+import { CHECK_AUTH, SHOW_POPUP, CLOSE_POPUP } from './store/actions.type'
 
 // mixins
 import titleMixin from './mixins/titleMixin'
@@ -50,6 +50,14 @@ function closePopups() {
 }
 window.closePopups = closePopups
 Vue.prototype.$closePopups = window.closePopups
+
+// api service
+import ApiService from './api/api.service'
+ApiService.init()
+
+router.beforeEach((to, from, next) => {    
+  Promise.all([store.dispatch(CHECK_AUTH)]).then(() => next())
+})
 
 // window mixins
 window.copy = copy

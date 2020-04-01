@@ -7,6 +7,7 @@ import { SET_BALANCE, RESET_BALANCES, SET_ACCOUNT_DATA, SET_VALIDATORS,
 import aes from 'aes-js'
 import pbkdf2 from 'pbkdf2'
 import crypto from 'crypto'
+import moment from 'moment'
 
 export const tools = {
   lang: {
@@ -459,6 +460,9 @@ export const tools = {
     }
 
     t.$root.$emit('switchTheme')
+  },
+  formatDate(date) {
+    return moment(date).format("MMM Do, YYYY [at] h:mm a")
   }
 }
 

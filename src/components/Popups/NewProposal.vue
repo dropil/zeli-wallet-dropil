@@ -107,11 +107,21 @@ export default {
       tools.broadcastTransaction('submitProposal')
       setTimeout(() => this.$root.$emit('getProposals'), 10000)
     },
-    close(exit = true) {
-      store.dispatch(RESET_TAB_STATE, 'submitProposal')
-      
-      if (exit) window.closePopups()
-      else this.getMinDeposit()
+    close(exit = true) {                  
+      if (exit) {
+        store.dispatch(RESET_TAB_STATE, 'submitProposal')
+        window.closePopups()
+      } 
+      else {
+        store.dispatch(SET_TAB_STATE, { type: 'submitProposal', key: 'loading', value: false })
+        store.dispatch(SET_TAB_STATE, { type: 'submitProposal', key: 'start', value: true })
+        store.dispatch(SET_TAB_STATE, { type: 'submitProposal', key: 'signed', value: false })
+        store.dispatch(SET_TAB_STATE, { type: 'submitProposal', key: 'broadcasted', value: false })
+        store.dispatch(SET_TAB_STATE, { type: 'submitProposal', key: 'signedTx', value: '' })
+        store.dispatch(SET_TAB_STATE, { type: 'submitProposal', key: 'broadcastResponse', value: '' })
+
+        this.getMinDeposit()
+      }
     }
   },
   destroyed() {

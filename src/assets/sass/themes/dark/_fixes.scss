@@ -6,3 +6,7 @@ footer.footer .container .left .logo-copy {
   @include img($svg-symbol-white-copy, contain, 8px center);
   background-size: 23px;
 }
+
+.page.access .tabs .tab-content .section h3 span {
+  opacity: 0.8;
+}

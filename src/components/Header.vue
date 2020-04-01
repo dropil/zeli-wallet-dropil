@@ -14,7 +14,8 @@
         <li v-if="meta.coin==='Dropil' && meta.environment==='Testnet'"><router-link to="/faucet">Faucet</router-link></li>
         <li><a :href="meta.docsUrl">Docs <i class="far fa-external-link"></i></a></li>
         <li><a :href="meta.websiteUrl">Website <i class="far fa-external-link"></i></a></li>
-        <li><a class="theme" @click="switchTheme()"><i v-tooltip="'Toggle light/dark theme'" class="fas" :class="themeClass"></i></a></li>
+        <li v-if="isAuth"><a @click="$store.dispatch('logout')">Logout</a></li>
+        <li><a class="theme" @click="switchTheme()"><i v-tooltip="'Toggle light/dark theme'" class="fas" :class="themeClass"></i></a></li>        
       </ul>
 
       <div class="submenu">
@@ -26,6 +27,7 @@
           <a :href="meta.docsUrl">Docs</a>
           <a :href="meta.websiteUrl">Website</a>
           <a class="theme" @click="switchTheme()"><i v-tooltip="'Toggle light/dark theme'" class="fas" :class="themeClass"></i> Toggle Theme</a>
+          <a v-if="isAuth" @click="$store.dispatch('logout')">Logout</a>
         </div>
       </div>
     </div>
@@ -41,7 +43,7 @@ export default {
   name: 'Header',
   components: { HeaderNetworks },
   computed: {
-    ...mapGetters(['meta'])    
+    ...mapGetters(['meta', 'isAuth'])    
   },
   data() {
     return {

@@ -352,7 +352,6 @@
           max-height: 0;
           overflow: hidden;
           transition: .3s ease all;
-          text-align: justify;
 
           &.active {
             max-height: 650px;
@@ -1467,5 +1466,72 @@
         }        
       }
     }
-  }  
+  } 
+  
+  &.faucet {
+    .content {
+      .form {        
+        position: relative;
+
+        &.login {
+          h2 {
+            color: $c-white;
+            font-family: Lato;
+          }
+        }
+
+        p.desc {
+          margin-bottom: 2em;
+        }
+
+        .form-field {
+          margin-bottom: 1.5em;          
+        }
+
+        .paragraphs {        
+          span.username {
+            background-color: $c-alt-bg;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid $c-border;
+            color: $c-black;
+            font-weight: 600;
+          }          
+        }        
+
+        .new-request, .requests {
+          margin-top: 1em;
+        }
+
+        .requests {          
+          .faucet-request {
+            @extend .well;
+            background-color: $c-alt-bg;
+            border: 1px solid $c-border;
+
+            .above, .under {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              column-gap: 1em;
+
+              .right {
+                text-align: right;
+              }
+            }
+
+            .under {
+              margin-top: .5em;              
+
+              .right {                
+                a {                  
+                  text-transform: uppercase;                  
+                  letter-spacing: .5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

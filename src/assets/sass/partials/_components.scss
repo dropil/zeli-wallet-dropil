@@ -838,7 +838,7 @@ a.add {
 }
 
 .signed-tx, .broadcasted-tx {
-  background-color: #f5faff;
+  background-color: $c-alt-bg;
   padding: 1em;
   border-radius: 6px;
   border: 1px solid $c-border;
@@ -851,7 +851,7 @@ a.add {
   color: $c-black;
 
   &::-webkit-scrollbar-track {
-    background-color: #f5faff;
+    background-color: $c-alt-bg;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -893,5 +893,36 @@ a.add {
       margin-top: .5em;
       font-size: 2em;
     }
+  }
+}
+
+.tag {                    
+  color: $c-white !important;
+  display: inline-block;
+  padding: 3px 15px;                    
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-size: 14px;
+  letter-spacing: .5px;    
+
+  &.sm {
+    transform: scale(0.8);
+  }
+
+  &.success, &.complete, &.green {
+    background-color: $c-green;
+  }
+
+  &.danger, &.red {
+    background-color: $c-red;
+  }
+
+  &.warning, &.orange, &.pending {
+    background-color: #ff9250;
+  }
+
+  &.brand, &.blue {
+    background-color: $c-brand;
   }
 }
