@@ -1,6 +1,6 @@
 # Zeli Wallet - Powered by Dropil
 
-Zeli Wallet - Access Dropil Chain and other supported Cosmos-SDK based chain wallets
+Zeli Wallet - Access and utilize Dropil Chain and other supported Cosmos-SDK based chain wallets
 
 ## Get in Touch
 

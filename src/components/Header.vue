@@ -12,6 +12,7 @@
         <li><router-link to="/create">Create a Wallet</router-link></li>
         <li><router-link to="/access">Access Wallet</router-link></li>
         <li v-if="meta.coin==='Dropil' && meta.environment==='Testnet'"><router-link to="/faucet">Faucet</router-link></li>
+        <li v-if="meta.coin==='Dropil'"><a href="https://calc.dropilchain.com">Staking Calc</a></li>
         <li><a :href="meta.docsUrl">Docs <i class="far fa-external-link"></i></a></li>
         <li><a :href="meta.websiteUrl">Website <i class="far fa-external-link"></i></a></li>
         <li v-if="isAuth"><a @click="$store.dispatch('logout')">Logout</a></li>
@@ -24,6 +25,7 @@
           <router-link to="/create">Create a Wallet</router-link>
           <router-link to="/access">Access Wallet</router-link>
           <router-link v-if="meta.coin==='Dropil' && meta.environment==='Testnet'" to="/faucet">Faucet</router-link>
+          <a v-if="meta.coin==='Dropil'" href="https://calc.dropilchain.com">Staking Calc</a>
           <a :href="meta.docsUrl">Docs</a>
           <a :href="meta.websiteUrl">Website</a>
           <a class="theme" @click="switchTheme()"><i v-tooltip="'Toggle light/dark theme'" class="fas" :class="themeClass"></i> Toggle Theme</a>
