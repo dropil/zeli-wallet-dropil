@@ -26,10 +26,7 @@
           <input v-model="destination" type="text" :placeholder="'Enter validator address (' + meta.bech32Prefix + 'valoper...)'" />
         </div>
 
-        <div class="field">
-          <div class="text">Amount</div>
-          <input v-model="amount" type="number" placeholder="Enter amount to delegate" />
-        </div>
+        <AmountField type="delegate" :available="balances.available" />
 
         <div class="field">
           <div class="text">Memo (optional)</div>
@@ -60,6 +57,7 @@
 import SignedTx from '../../../components/SignedTx'
 import BroadcastedTx from '../../../components/BroadcastedTx'
 import Loading from '../../../../MiniComponents/Loading'
+import AmountField from '../../../../MiniComponents/AmountField'
 import tools from '../../../../../mixins/tools'
 import { mapGetters } from 'vuex'
 import store from '../../../../../store'
@@ -67,7 +65,7 @@ import { SET_TAB_STATE, RESET_TAB_STATE } from '../../../../../store/actions.typ
 
 export default {
   name: 'Delegate',
-  components: { SignedTx, BroadcastedTx, Loading },
+  components: { SignedTx, BroadcastedTx, Loading, AmountField },
   computed: {
     ...mapGetters(['meta', 'delegate', 'balances'])    
   },

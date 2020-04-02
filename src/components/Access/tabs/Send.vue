@@ -16,10 +16,7 @@
           <input v-model="destination" type="text" :placeholder="'Enter destination address (' + meta.bech32Prefix + '...)'" />
         </div>
 
-        <div class="field">
-          <div class="text">Amount</div>
-          <input v-model="amount" type="number" placeholder="Enter amount to send" />
-        </div>
+        <AmountField type="send" :available="balances.available" />
 
         <div class="field">
           <div class="text">Memo (optional)</div>
@@ -52,12 +49,13 @@ import { SET_TAB_STATE } from '../../../store/actions.type'
 import SignedTx from '../components/SignedTx'
 import BroadcastedTx from '../components/BroadcastedTx'
 import Loading from '../../MiniComponents/Loading'
+import AmountField from '../../MiniComponents/AmountField'
 import tools from '../../../mixins/tools'
 import store from '../../../store'
 
 export default {
   name: 'Send',
-  components: { SignedTx, BroadcastedTx, Loading },
+  components: { SignedTx, BroadcastedTx, Loading, AmountField },
   computed: {
     ...mapGetters(['meta', 'send', 'balances'])
   },

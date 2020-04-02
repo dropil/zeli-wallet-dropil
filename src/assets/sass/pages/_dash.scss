@@ -1395,6 +1395,40 @@
                 }              
               }                    
             }
+
+            .input-button {
+              position: relative;
+              
+              input {
+                padding-right: 30px;
+                -moz-appearance: textfield;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                  margin: 0;
+                  -webkit-appearance: none;
+                }
+              }
+
+              .btn.max {
+                @include centerer(false, true);
+                position: absolute;                
+                right: .25em;                
+                padding: 3px 8px;
+                font-size: 11px;
+                background-color: transparent;
+                color: $c-black;
+                border: 1px solid $c-black;                
+              }
+            }
+
+            .message {
+              margin-top: .5em;
+              padding-left: .5em;
+              font-size: 14px;
+              font-weight: 600;
+              color: $c-red;
+            }
           }              
         }
 
