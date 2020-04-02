@@ -8,6 +8,8 @@ import aes from 'aes-js'
 import pbkdf2 from 'pbkdf2'
 import crypto from 'crypto'
 import moment from 'moment'
+import Api from '../api/api.service'
+import jwtService from '../api/jwt.service'
 
 export const tools = {
   lang: {
@@ -238,6 +240,8 @@ export const tools = {
       store.dispatch(SET_TAB_STATE, { type, key: 'signed', value: true })
       store.dispatch(SET_TAB_STATE, { type, key: 'broadcasted', value: false })
       store.dispatch(SET_TAB_STATE, { type, key: 'signedTx', value: signedTx })
+
+      tools.logEvent('Transaction Signed', 'Type: ' + type)
     })
     .catch(e => {
       tools.toastrError(e.message)
@@ -257,6 +261,8 @@ export const tools = {
     store.dispatch(SET_TAB_STATE, { type, key: 'broadcasted', value: true })
     store.dispatch(SET_TAB_STATE, { type, key: 'broadcastResponse', value: response })
     store.dispatch(SET_ACCOUNT_DATA, { type: 'sequence', value: String(parseInt(store.state.wallet.accountData.sequence) + 1) })
+
+    tools.logEvent('Transaction Broadcasted', 'Type: ' + type)
 
     setTimeout(() => {
       tools.wallet.load()
@@ -463,6 +469,17 @@ export const tools = {
   },
   formatDate(date) {
     return moment(date).format("MMM Do, YYYY [at] h:mm a")
+  },
+  logEvent(type, details = 'N/A') {
+    if (process.env.VUE_APP_ENV === 'production' && process.env.VUE_APP_HOST === 'Zeli') {
+      Api.post('/event', {
+        token: jwtService.getReauthToken() || '',
+        platform: 'Zeli',
+        type,
+        details,
+        date: new Date()
+      }).catch()
+    }
   }
 }
 

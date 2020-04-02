@@ -146,6 +146,7 @@ export default {
         return tools.toastrError("Mnemonic entered did not unlock a valid " + this.meta.bech32Prefix + ' wallet');      
 
       tools.wallet.access(mnemonic, address)
+      tools.logEvent('Accessed Wallet', 'Accessed via keystore file')
 
       this.$emit('load')
     }

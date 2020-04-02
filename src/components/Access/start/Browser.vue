@@ -132,6 +132,7 @@ export default {
         return tools.toastrError("Mnemonic retrieved with provided password did not unlock a valid " + this.meta.bech32Prefix + ' wallet');
 
       tools.wallet.access(mnemonic, address)
+      tools.logEvent('Accessed Wallet', 'Accessed via browser saved wallet')
 
       this.$emit('load')      
     }

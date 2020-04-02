@@ -47,6 +47,8 @@ export default {
       this.$refs.saveForm.saveBrowser(mnemonic, address)
       this.$refs.saveForm.saveKeystore(mnemonic, address)
 
+      tools.logEvent('Wallet Generated', 'Save options - browser: ' + this.$refs.saveForm.browser + '; keystore: ' + this.$refs.saveForm.keystore)
+
       this.$emit('step', 'details')
     },
     async generateWallet() {

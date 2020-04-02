@@ -132,10 +132,13 @@ export default {
       else if (!this.input.startsWith(this.meta.bech32Prefix + '1'))
         return tools.toastrError('Address entered was not in proper format "' + this.meta.bech32Prefix + '1..."')
             
-      Api.post('faucet', { value: this.input }, true).then(() => {        
+      Api.post('faucet', { value: this.input }, true).then(data => {
+        if (typeof data === "string") return tools.toastrError(data)
+
         this.$refs.address.input = ''
         this.getFaucetRequests()
         tools.toastrSuccess('Faucet request has been submitted, requests are usually completed within 1 minute. This page will automatically update when processed.')
+        tools.logEvent('Faucet Used')
       })
     },
     startTimeout() {      

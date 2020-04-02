@@ -102,6 +102,7 @@ export default {
       }      
 
       tools.wallet.access(mnemonic, address)
+      tools.logEvent('Accessed Wallet', 'Accessed via mnemonic phrase')
 
       this.$emit('load')
     },

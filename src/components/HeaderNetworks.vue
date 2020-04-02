@@ -103,6 +103,7 @@ export default {
 
       store.dispatch(SET_META, meta)
       tools.toastrSuccess('You have switched to the ' + chainId + ' ' + environment + ' network')
+      tools.logEvent('Switched Network', 'New Network: ' + chainId)
       this.$router.push('/')
     }
   }

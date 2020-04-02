@@ -59,6 +59,7 @@ export default {
     switchTheme() {
       tools.toggleTheme(this)
       this.getThemeClass()
+      tools.logEvent('Switched Theme', 'New Theme: ' + tools.getTheme())
     },
     getThemeClass() {
       this.themeClass = tools.getTheme() === 'light' ? 'fa-sun': 'fa-moon'
