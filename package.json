@@ -18,7 +18,7 @@
     "crypto-js": "^4.0.0",
     "izitoast": "^1.4.0",
     "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "normalize.css": "^8.0.1",
     "pbkdf2": "^3.0.17",
     "qrcode": "^1.4.4",
